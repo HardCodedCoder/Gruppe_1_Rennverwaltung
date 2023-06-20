@@ -1,0 +1,119 @@
+DROP TABLE IF EXISTS ausfall;
+DROP TABLE IF EXISTS ergebnis;
+DROP TABLE IF EXISTS rennen;
+DROP TABLE IF EXISTS rennstrecke;
+DROP TABLE IF EXISTS fahrer;
+DROP TABLE IF EXISTS fahrzeug;
+DROP TABLE IF EXISTS team;
+DROP TABLE IF EXISTS sponsor;
+
+
+CREATE TABLE sponsor (
+	sponsor_ID SERIAL,
+	name VARCHAR(20) NOT NULL,
+	PRIMARY KEY (sponsor_ID)
+);
+
+CREATE TABLE team (
+	team_ID SERIAL,
+	name VARCHAR(20) NOT NULL,
+	gruendungsjahr INT NOT NULL,
+	sponsor_ID INT NOT NULL,
+	PRIMARY KEY (team_ID),
+	FOREIGN KEY (sponsor_ID) REFERENCES sponsor (sponsor_ID)
+);
+
+CREATE TABLE fahrzeug (
+	fahrzeug_ID SERIAL,
+	marke VARCHAR(50) NOT null,
+	modell VARCHAR(50) NOT null,
+	baujahr INT NOT null,
+	PRIMARY KEY (fahrzeug_ID)
+);
+
+CREATE TABLE fahrer (
+	fahrer_ID SERIAL,
+	vorname VARCHAR(50) NOT NULL,
+	nachname VARCHAR(50) NOT NULL,
+	nationalitaet VARCHAR(50) NOT NULL,
+	fahrzeug_ID INT NOT NULL,
+	team_ID INT NOT NULL,
+	PRIMARY KEY (fahrer_ID),
+	FOREIGN KEY (fahrzeug_ID) REFERENCES fahrzeug(fahrzeug_ID),
+	FOREIGN KEY (team_ID) REFERENCES team (team_ID)
+);
+
+CREATE TABLE rennstrecke (
+	rennstrecken_ID SERIAL,
+	Name VARCHAR(20) NOT NULL,
+	bundesland VARCHAR(20) NOT NULL,
+	stadt VARCHAR(15) NOT NULL,
+	PRIMARY KEY (rennstrecken_ID)
+);
+
+CREATE TABLE rennen (
+	rennen_ID SERIAL,
+	name VARCHAR(50) NOT NULL,
+	datum date NOT NULL,
+	rennstrecken_ID INT,
+	PRIMARY KEY (rennen_ID),
+	FOREIGN KEY (rennstrecken_ID) REFERENCES rennstrecke(rennstrecken_ID)
+);
+
+CREATE TABLE ergebnis (
+	rennen_ID INT,
+	erster INT NOT NULL,
+	zweiter INT NOT NULL,
+	dritter INT,
+	PRIMARY KEY(rennen_ID, erster, zweiter, dritter),
+	FOREIGN KEY (erster) REFERENCES fahrer (fahrer_ID),
+	FOREIGN KEY (zweiter) REFERENCES fahrer (fahrer_ID),
+	FOREIGN KEY (dritter) REFERENCES fahrer (fahrer_ID)
+);
+
+CREATE TABLE ausfall (
+	fahrerID INT NOT NULL,
+	rennenID INT NOT NULL,
+	ausfallszenario VARCHAR(100) NOT NULL,
+	PRIMARY KEY (fahrerID, RennenID),
+	FOREIGN KEY (fahrerID) REFERENCES Fahrer(fahrer_ID),
+	FOREIGN KEY (rennenID) REFERENCES Rennen(rennen_ID)
+);
+
+INSERT INTO sponsor values (42,'Nugget Inc.');
+INSERT INTO sponsor values (69,'Eros Ramazzotti');
+INSERT INTO sponsor values (70,'Bad Dragon');
+
+INSERT INTO team values (1,'AMG Petronas',1997,42);
+INSERT INTO team values (2,'Scuderia Ferrari',1996,69);
+INSERT INTO team values (3,'Lada',1973,70);
+
+INSERT INTO fahrzeug values (1000,'Mercedes','F1 W13 E Performance',2022);
+INSERT INTO fahrzeug values (1001,'Reb Bull','RB18',2022);
+INSERT INTO fahrzeug values (1002,'Ferrari','SF22',2022);
+INSERT INTO fahrzeug values (1003,'Ferrari','SF22',2022);
+INSERT INTO fahrzeug values (1004,'Alpine Tauri','A522',2022);
+INSERT INTO fahrzeug values (1005,'Alpine','AT03',2022);
+
+INSERT INTO fahrer values (1,'Andreas','Graf','Österreich',1000,1);
+INSERT INTO fahrer values (2,'Nugget','Meister','England',1001,1);
+INSERT INTO fahrer values (3,'Akira','Blacky','Italien',1002,2);
+INSERT INTO fahrer values (4,'Ludmilla','Steinschreck','Taiwan',1003,2);
+INSERT INTO fahrer values (5,'Martin','Dorak','Uganda',1004,3);
+INSERT INTO fahrer values (6,'Hassan','Sajid Naseer','Schweden',1005,3);
+
+INSERT INTO rennstrecke values (1,'Red Bull Ring','Steiermark','Spielberg');
+INSERT INTO rennstrecke values (2,'Wachau Ring','Niederösterreich','Melk');
+INSERT INTO rennstrecke values (3,'Wiener Ring','Wien','Wien');
+
+INSERT INTO rennen values (1,'Großer Preis von Steiermark','2021-07-04',1);
+INSERT INTO rennen values (2,'Großer Preis von Niederösterreich','2021-06-27',2);
+INSERT INTO rennen values (3,'Großer Preis von Wien','2021-06-20',3);
+
+INSERT INTO ergebnis values (1,1,2,3);
+INSERT INTO ergebnis values (2,3,2,1);
+INSERT INTO ergebnis values (3,6,4,3);
+
+INSERT INTO ausfall values (5,1,'Unfall');
+INSERT INTO ausfall values (5,2,'Motorschaden');
+INSERT INTO ausfall values (4,1,'Unfall');
