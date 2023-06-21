@@ -1,10 +1,10 @@
 package at.fhburgenland.org.lecture;
 
-import javax.persistence.EntityManager;
+import at.fhburgenland.org.lecture.tables.Sponsor;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.util.List;
-import java.util.LongSummaryStatistics;
 
 public class Main {
 

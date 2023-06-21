@@ -1,4 +1,4 @@
-package at.fhburgenland.org.lecture;
+package at.fhburgenland.org.lecture.tables;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,13 +17,13 @@ public class Sponsor {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sponsor_ID", updatable = false, nullable = false)
+    @Column(name = "sponsor_ID", updatable = false, nullable = false, unique = true)
     private int sponsorId;
 
     /**
      * Holds the name of the sponsor.
      */
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 20)
     private String name;
 
     /**
