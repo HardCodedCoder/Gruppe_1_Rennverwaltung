@@ -1,4 +1,4 @@
-package at.fhburgenland.org.lecture.tables;
+package at.fhburgenland.org.lecture.entities;
 
 import lombok.Getter;
 import lombok.Setter;

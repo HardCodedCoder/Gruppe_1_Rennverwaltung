@@ -1,4 +1,4 @@
-package at.fhburgenland.org.lecture.tables;
+package at.fhburgenland.org.lecture.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -41,12 +41,12 @@ public class Driver {
     /**
      * Holds the vehicle ID
      */
-    @Column(name = "fahrzeug_ID", nullable = false, updatable = false, insertable = false)
+    @Column(name = "fahrzeug_ID", nullable = false, insertable = false, updatable = false)
     private int vehicleId;
 
     /**
      * Holds the team ID
      */
-    @Column(name = "team_ID", nullable = false, updatable = false, insertable = false)
+    @Column(name = "team_ID", nullable = false, insertable = false, updatable = false)
     private int teamId;
 }

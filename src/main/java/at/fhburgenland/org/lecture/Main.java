@@ -1,6 +1,6 @@
 package at.fhburgenland.org.lecture;
 
-import at.fhburgenland.org.lecture.tables.Sponsor;
+import at.fhburgenland.org.lecture.entities.Sponsor;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -36,6 +36,14 @@ public class Main {
 
         chonker.setName("he is coming!");
         sponsorEntityManager.update(chonker);
+        sponsors = sponsorEntityManager.readAll();
+        for (Sponsor sponsor : sponsors) {
+            System.out.println(sponsor);
+        }
+
+        chonker.setSponsorId(444);
+        sponsorEntityManager.update(chonker);
+
         sponsors = sponsorEntityManager.readAll();
         for (Sponsor sponsor : sponsors) {
             System.out.println(sponsor);
