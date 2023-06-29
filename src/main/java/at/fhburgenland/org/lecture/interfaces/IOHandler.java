@@ -88,4 +88,8 @@ public interface IOHandler {
     boolean askToContinue(String prompt);
 
     void renderRaceTable(List<Race> races);
+
+    void renderOutageTable(List outages);
+
+    void renderRaceTrackTable(List raceTracks);
 }

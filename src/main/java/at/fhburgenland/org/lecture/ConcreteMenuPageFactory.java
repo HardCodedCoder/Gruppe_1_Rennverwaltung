@@ -68,9 +68,9 @@ public class ConcreteMenuPageFactory implements MenuPageFactory {
     private List<MenuItem> createMainMenuItems() {
         return List.of(
                 new MenuItem(MenuPages.DRIVER.getLabel(), 1, new ShowDriverMenuObserver(this.hostingService), MenuPages.MAIN),
-                new MenuItem(MenuPages.OUTAGE.getLabel(), 2, null, MenuPages.MAIN),
+                new MenuItem(MenuPages.OUTAGE.getLabel(), 2, new ShowOutageMenuObserver(this.hostingService), MenuPages.MAIN),
                 new MenuItem(MenuPages.RACE.getLabel(), 3, new ShowRaceMenuObserver(this.hostingService), MenuPages.RACE),
-                new MenuItem(MenuPages.RACETRACK.getLabel(), 4, null, MenuPages.RACETRACK),
+                new MenuItem(MenuPages.RACETRACK.getLabel(), 4, new ShowRaceTrackMenuObserver(this.hostingService), MenuPages.RACETRACK),
                 new MenuItem(MenuPages.RESULT.getLabel(), 5, null, MenuPages.RESULT),
                 new MenuItem(MenuPages.SPONSOR.getLabel(), 6, null, MenuPages.SPONSOR),
                 new MenuItem(MenuPages.TEAM.getLabel(), 7, null, MenuPages.TEAM),

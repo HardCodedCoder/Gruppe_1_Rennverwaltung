@@ -2,7 +2,9 @@ package at.fhburgenland.org.lecture.menu.menuObserver;
 
 import at.fhburgenland.org.lecture.BaseEntityManager;
 import at.fhburgenland.org.lecture.entities.Driver;
+import at.fhburgenland.org.lecture.entities.Outage;
 import at.fhburgenland.org.lecture.entities.Race;
+import at.fhburgenland.org.lecture.entities.RaceTrack;
 import at.fhburgenland.org.lecture.enumerations.MenuPages;
 import at.fhburgenland.org.lecture.interfaces.Service;
 
@@ -24,9 +26,21 @@ public class ReadObserver extends BaseMenuObserver {
         switch (fromMenu)
         {
             case DRIVER -> this.executeReadForDriver();
+            case OUTAGE -> this.executeReadForOutage();
             case RACE -> this.executeReadForRace();
+            case RACETRACK -> this.executeReadForRaceTrack();
             default -> System.out.println("Test");
         }
+    }
+
+    private void executeReadForRaceTrack() {
+        var raceTracks = entityManagerMap.get(RaceTrack.class).readAll();
+        this.service.getIOHandler().renderRaceTrackTable(raceTracks);
+    }
+
+    private void executeReadForOutage() {
+        var outages = entityManagerMap.get(Outage.class).readAll();
+        this.service.getIOHandler().renderOutageTable(outages);
     }
 
     private void executeReadForRace() {

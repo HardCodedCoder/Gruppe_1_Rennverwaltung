@@ -1,7 +1,9 @@
 package at.fhburgenland.org.lecture.view;
 
 import at.fhburgenland.org.lecture.entities.Driver;
+import at.fhburgenland.org.lecture.entities.Outage;
 import at.fhburgenland.org.lecture.entities.Race;
+import at.fhburgenland.org.lecture.entities.RaceTrack;
 import at.fhburgenland.org.lecture.enumerations.BackgroundColor;
 import at.fhburgenland.org.lecture.enumerations.ForegroundColor;
 import at.fhburgenland.org.lecture.interfaces.IOHandler;
@@ -320,6 +322,28 @@ public class ConsoleIOHandler implements IOHandler
         TableColumn<Race> raceDateColumn = new Column<>("DATUM", Race::getDate);
         TableColumn<Race> raceTrackIdColumn = new Column<>("RENNSTRECKEN ID", Race::getRaceTrackId);
         raceTableRenderer.renderTable(races, raceIdColumn, raceNameColumn, raceDateColumn, raceTrackIdColumn);
+        System.out.println();
+    }
+
+    @Override
+    public void renderOutageTable(List outages) {
+        System.out.println();
+        TableRenderer<Outage> outageTableRenderer = new TableRenderer<>();
+        TableColumn<Outage> driverId = new Column<>("FAHRER ID", Outage::getDriverId);
+        TableColumn<Outage> raceId = new Column<>("RENNEN ID", Outage::getRaceId);
+        outageTableRenderer.renderTable(outages, driverId, raceId);
+        System.out.println();
+    }
+
+    @Override
+    public void renderRaceTrackTable(List raceTracks) {
+        System.out.println();
+        TableRenderer<RaceTrack> raceTrackTableRenderer = new TableRenderer<>();
+        TableColumn<RaceTrack> raceTrackColumn = new Column<>("RENNSTRECKEN ID", RaceTrack::getRaceTrackId);
+        TableColumn<RaceTrack> raceTrackNameColumn = new Column<>("NAME", RaceTrack::getName);
+        TableColumn<RaceTrack> raceTrackStateColumn = new Column<>("BUNDESLAND", RaceTrack::getState);
+        TableColumn<RaceTrack> raceTrackCityColumn = new Column<>("STADT", RaceTrack::getCity);
+        raceTrackTableRenderer.renderTable(raceTracks, raceTrackColumn, raceTrackNameColumn, raceTrackStateColumn, raceTrackCityColumn);
         System.out.println();
     }
 
