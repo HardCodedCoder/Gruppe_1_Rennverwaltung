@@ -35,10 +35,6 @@ public class ConsoleIOHandler implements IOHandler
      */
     private static final int MENU_WIDTH_PADDING = 5;
 
-    private static final int USER_RENDER_LINE_LENGTH = 45;
-
-    private static ForegroundColor currentUserForegroundColor = ForegroundColor.BLUE;
-
     /**
      * Holds the scanner instance reading input from the console.
      */
@@ -161,7 +157,7 @@ public class ConsoleIOHandler implements IOHandler
         this.drawLine(menuWidth);
         this.printColoredLn(toPrint.getCurrent().getMenuPageType().getLabel(), ForegroundColor.MAGENTA, BackgroundColor.BLACK);
         this.drawLine(menuWidth);
-        this.printMenuPage((ConsolePage)toPrint.getCurrent());
+        this.printMenuPage(toPrint.getCurrent());
         this.drawLine(menuWidth);
     }
 
@@ -179,18 +175,6 @@ public class ConsoleIOHandler implements IOHandler
         this.waitForConfirmation();
     }
 
-    /**
-     * Prints a warning message in a specific format to the user interface.
-     *
-     * @param toPrint The message to print.
-     */
-    @Override
-    public void printWarningMessage(String toPrint) {
-        this.println();
-        this.printColored("[WARNING]: ", ForegroundColor.YELLOW);
-        this.println(toPrint);
-        this.println();
-    }
 
     /**
      * Prints a message to the user interface.
@@ -272,7 +256,7 @@ public class ConsoleIOHandler implements IOHandler
     @Override
     public String askUserForInput(String prompt, boolean forceInput) {
         boolean exit = !forceInput;
-        String input = "";
+        String input;
         do
         {
             System.out.print(prompt + ": ");
@@ -297,13 +281,13 @@ public class ConsoleIOHandler implements IOHandler
         while (!exit) {
             String input = this.askUserForInput(prompt, true);
             switch (input) {
-                case "y":
+                case "y" -> {
                     return true;
-                case "n":
+                }
+                case "n" -> {
                     return false;
-                default:
-                    this.printErrorMessage("Invalid input. Please enter y or n.");
-                    break;
+                }
+                default -> this.printErrorMessage("Invalid input. Please enter y or n.");
             }
 
         }
@@ -323,7 +307,7 @@ public class ConsoleIOHandler implements IOHandler
     }
 
     @Override
-    public void renderOutageTable(List outages) {
+    public void renderOutageTable(List<Outage> outages) {
         System.out.println();
         TableRenderer<Outage> outageTableRenderer = new TableRenderer<>();
         TableColumn<Outage> driverId = new Column<>("FAHRER ID", Outage::getDriverId);

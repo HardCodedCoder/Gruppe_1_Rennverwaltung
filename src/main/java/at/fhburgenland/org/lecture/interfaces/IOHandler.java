@@ -1,7 +1,6 @@
 package at.fhburgenland.org.lecture.interfaces;
 
-import at.fhburgenland.org.lecture.entities.Driver;
-import at.fhburgenland.org.lecture.entities.Race;
+import at.fhburgenland.org.lecture.entities.*;
 import at.fhburgenland.org.lecture.enumerations.BackgroundColor;
 import at.fhburgenland.org.lecture.enumerations.ForegroundColor;
 import at.fhburgenland.org.lecture.menu.MenuItem;
@@ -11,7 +10,6 @@ import java.util.List;
 public interface IOHandler {
     /**
      * Prints the menu to the user interface.
-     * @return
      */
     void printMenu(Menu toPrint);
 
@@ -22,20 +20,14 @@ public interface IOHandler {
     void printErrorMessage(String toPrint);
 
     /**
-     * Prints a warning message in a specific format to the user interface.
-     * @param toPrint The message to print.
-     */
-    void printWarningMessage(String toPrint);
-
-    /**
      * Prints a message to the user interface.
      * @param toPrint The message to print.
      */
     void println(String toPrint);
 
     /**
-     * Prints the menupage to the user interface.
-     * @param consolePage
+     * Prints the menu-page to the user interface.
+     * @param consolePage The page to render.
      */
     void printMenuPage(MenuPage consolePage);
 
@@ -67,11 +59,6 @@ public interface IOHandler {
     void printColoredLn(String toPrint, ForegroundColor foregroundColor, BackgroundColor backgroundColor);
 
     /**
-     * Prints all values of an enumeration to the console.
-     */
-    <T extends Enum<T>> void printEnumValues(Class<T> enumClass);
-
-    /**
      * Prints a text to the output.
      * @param toPrint The text to print
      */
@@ -81,7 +68,7 @@ public interface IOHandler {
 
     Number getNumberFromUser(String prompt, boolean skipValueCheck);
 
-    public void renderDriverTable(List<Driver> data);
+    void renderDriverTable(List<Driver> data);
 
     String askUserForInput(String prompt, boolean forceInput);
 
@@ -89,15 +76,15 @@ public interface IOHandler {
 
     void renderRaceTable(List<Race> races);
 
-    void renderOutageTable(List outages);
+    void renderOutageTable(List<Outage> outages);
 
-    void renderRaceTrackTable(List raceTracks);
+    void renderRaceTrackTable(List<RaceTrack> raceTracks);
 
-    void renderVehicleTable(List vehicles);
+    void renderVehicleTable(List<Vehicle> vehicles);
 
-    void renderTeamTable(List teams);
+    void renderTeamTable(List<Team> teams);
 
-    void renderSponsorTable(List sponsors);
+    void renderSponsorTable(List<Sponsor> sponsors);
 
-    void renderResultTable(List results);
+    void renderResultTable(List<Result> results);
 }
