@@ -19,22 +19,19 @@ public class Result {
     private int resultId;
 
     @Id
-    @OneToOne
     @JoinColumn(name = "fahrer_ID")
     @Column(name = "erster", nullable = false, insertable = false, updatable = false)
     private int firstId;
 
     @Id
-    @OneToOne
     @JoinColumn(name = "fahrer_ID")
     @Column(name = "zweiter", nullable = false, insertable = false, updatable = false)
-    private Driver secondId;
+    private int secondId;
 
     @Id
-    @OneToOne
     @JoinColumn(name = "fahrer_ID")
     @Column(name = "dritter", nullable = false, insertable = false, updatable = false)
-    private Driver thirdId;
+    private int thirdId;
 
 
 }

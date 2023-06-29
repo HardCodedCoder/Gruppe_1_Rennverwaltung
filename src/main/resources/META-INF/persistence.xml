@@ -5,9 +5,9 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 
-    <persistence-unit name="sponsor" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="fahrer" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.org.lecture.Sponsor</class>
+        <class>at.fhburgenland.org.lecture.entities.Driver</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
@@ -19,4 +19,21 @@
             <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
         </properties>
     </persistence-unit>
+
+    <persistence-unit name="rennen" transaction-type="RESOURCE_LOCAL">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>at.fhburgenland.org.lecture.entities.Race</class>
+        <properties>
+            <!-- Driver for DB database -->
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <!-- URL for DB -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <!-- Username -->
+            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <!-- Password -->
+            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+        </properties>
+    </persistence-unit>
+
+
 </persistence>

@@ -1,52 +1,29 @@
 package at.fhburgenland.org.lecture;
 
-import at.fhburgenland.org.lecture.entities.Sponsor;
+import at.fhburgenland.org.lecture.exceptions.InstantiateServiceException;
+import at.fhburgenland.org.lecture.interfaces.IOHandler;
+import at.fhburgenland.org.lecture.interfaces.Service;
+import at.fhburgenland.org.lecture.view.ConsoleIOHandler;
+import lombok.extern.slf4j.Slf4j;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.util.List;
-
+@Slf4j
 public class Main {
 
     public static void main(String[] args) {
-        /* TO DO
-        Folgende Methoden sollen implementiert werden:
-        - addPerson
-        - readPerson
-        - readAll
-        - updatePerson
-        - deletePerson
-         */
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("sponsor");
-        BaseEntityManager<Sponsor> sponsorEntityManager = new BaseEntityManager<>(
-                factory.createEntityManager(),
-                Sponsor.class);
-        List<Sponsor> sponsors = sponsorEntityManager.readAll();
-        for (Sponsor sponsor : sponsors) {
-            System.out.println(sponsor);
+        log.info("Starting application...");
+        log.info("Starting Race Management Service...");
+        IOHandler ioHandler = new ConsoleIOHandler();
+        Service service = null;
+        try {
+            service = new RaceManagementService(ioHandler);
+        } catch (InstantiateServiceException exception) {
+            log.error(exception.getMessage() + "\nExiting...");
+            System.err.println(exception.getMessage() + "\nExiting...");
+            System.exit(1);
         }
-
-        Sponsor chonker = new Sponsor();
-        chonker.setName("Mega Chonker");
-        sponsorEntityManager.create(chonker);
-        sponsors = sponsorEntityManager.readAll();
-        for (Sponsor sponsor : sponsors) {
-            System.out.println(sponsor);
-        }
-
-        chonker.setName("he is coming!");
-        sponsorEntityManager.update(chonker);
-        sponsors = sponsorEntityManager.readAll();
-        for (Sponsor sponsor : sponsors) {
-            System.out.println(sponsor);
-        }
-
-        chonker.setSponsorId(444);
-        sponsorEntityManager.update(chonker);
-
-        sponsors = sponsorEntityManager.readAll();
-        for (Sponsor sponsor : sponsors) {
-            System.out.println(sponsor);
-        }
+        log.info("Initialization of the service completed.");
+        log.info("Executing service...");
+        service.runService();
+        log.info("Shutting down application...");
     }
 }

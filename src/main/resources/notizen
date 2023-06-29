@@ -1,0 +1,68 @@
+1; Crud Funktionen
+   1.1; Welche tabelle
+	1.1.1; Welche Funktion
+
+2; Abfrage: Welcher Fahrer hat an welchem Datum bei welchen Rennen mitgemacht. Ausgabe des Rennens mit Datum, Name des Fahrer, Team und Fahrzeug, sortiert nach Gewinn
+	2.1; Auswahl datum / fahrer / rennen
+
+...
+
+-; Exit
+
+1) Fahrer verwalten
+    1) anzeigen
+    2) Anlegen
+    3) Löschen
+    4) Bearbeiten
+
+2) Ausfallzeiten verwalten
+3) Rennen verwalten
+4) Rennstrecken verwalten
+5) Ergebnisse verwalten
+6) Sponsoren verwalten
+7) Teams verwalten
+8) Fahrzeuge verwalten
+
+Abfrage: Fahrer und Rennen
+
+
+
+
+/* TO DO
+        Folgende Methoden sollen implementiert werden:
+        - addPerson
+        - readPerson
+        - readAll
+        - updatePerson
+        - deletePerson
+         */
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("sponsor");
+        BaseEntityManager<Sponsor> sponsorEntityManager = new BaseEntityManager<>(
+                factory.createEntityManager(),
+                Sponsor.class);
+        List<Sponsor> sponsors = sponsorEntityManager.readAll();
+        for (Sponsor sponsor : sponsors) {
+            System.out.println(sponsor);
+        }
+
+        Sponsor chonker = new Sponsor();
+        chonker.setName("Mega Chonker");
+        sponsorEntityManager.create(chonker);
+        sponsors = sponsorEntityManager.readAll();
+        for (Sponsor sponsor : sponsors) {
+            System.out.println(sponsor);
+        }
+
+        chonker.setName("he is coming!");
+        sponsorEntityManager.update(chonker);
+        sponsors = sponsorEntityManager.readAll();
+        for (Sponsor sponsor : sponsors) {
+            System.out.println(sponsor);
+        }
+
+        chonker.setSponsorId(444);
+        sponsorEntityManager.update(chonker);
+
+        sponsors = sponsorEntityManager.readAll();
+        for (Sponsor sponsor : sponsors) {
+            System.out.println(sponsor);
