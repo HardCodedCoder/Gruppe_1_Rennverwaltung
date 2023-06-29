@@ -1,9 +1,6 @@
 package at.fhburgenland.org.lecture.view;
 
-import at.fhburgenland.org.lecture.entities.Driver;
-import at.fhburgenland.org.lecture.entities.Outage;
-import at.fhburgenland.org.lecture.entities.Race;
-import at.fhburgenland.org.lecture.entities.RaceTrack;
+import at.fhburgenland.org.lecture.entities.*;
 import at.fhburgenland.org.lecture.enumerations.BackgroundColor;
 import at.fhburgenland.org.lecture.enumerations.ForegroundColor;
 import at.fhburgenland.org.lecture.interfaces.IOHandler;
@@ -344,6 +341,52 @@ public class ConsoleIOHandler implements IOHandler
         TableColumn<RaceTrack> raceTrackStateColumn = new Column<>("BUNDESLAND", RaceTrack::getState);
         TableColumn<RaceTrack> raceTrackCityColumn = new Column<>("STADT", RaceTrack::getCity);
         raceTrackTableRenderer.renderTable(raceTracks, raceTrackColumn, raceTrackNameColumn, raceTrackStateColumn, raceTrackCityColumn);
+        System.out.println();
+    }
+
+    @Override
+    public void renderVehicleTable(List vehicles) {
+        System.out.println();
+        TableRenderer<Vehicle> vehicleTableRenderer = new TableRenderer<>();
+        TableColumn<Vehicle> vehicleIdColumn = new Column<>("ID", Vehicle::getVehicleId);
+        TableColumn<Vehicle> vehicleBrandColumn = new Column<>("MARKE", Vehicle::getBrand);
+        TableColumn<Vehicle> vehicleModelColumn = new Column<>("MODELL", Vehicle::getModel);
+        TableColumn<Vehicle> vehicleManufactDateColumn = new Column<>("BAUJAHR", Vehicle::getConstructionYear);
+        vehicleTableRenderer.renderTable(vehicles, vehicleIdColumn, vehicleBrandColumn, vehicleModelColumn, vehicleManufactDateColumn);
+        System.out.println();
+    }
+
+    @Override
+    public void renderTeamTable(List teams) {
+        System.out.println();
+        TableRenderer<Team> teamTableRenderer = new TableRenderer<>();
+        TableColumn<Team> teamIdColumn = new Column<>("ID", Team::getTeamId);
+        TableColumn<Team> teamNameColumn = new Column<>("NAME", Team::getName);
+        TableColumn<Team> teamFoundingYearColumn = new Column<>("GRÜNDUNGSJAHR", Team::getFoundingYear);
+        TableColumn<Team> teamSponsorColumn = new Column<>("SPONSOR ID", Team::getSponsorId);
+        teamTableRenderer.renderTable(teams, teamIdColumn, teamNameColumn, teamFoundingYearColumn, teamSponsorColumn);
+        System.out.println();
+    }
+
+    @Override
+    public void renderSponsorTable(List sponsors) {
+        System.out.println();
+        TableRenderer<Sponsor> sponsorTableRenderer = new TableRenderer<>();
+        TableColumn<Sponsor> sponsorIdColumn = new Column<>("ID", Sponsor::getSponsorId);
+        TableColumn<Sponsor> sponsorNameColumn = new Column<>("NAME", Sponsor::getName);
+        sponsorTableRenderer.renderTable(sponsors, sponsorIdColumn, sponsorNameColumn);
+        System.out.println();
+    }
+
+    @Override
+    public void renderResultTable(List results) {
+        System.out.println();
+        TableRenderer<Result> resultTableRenderer = new TableRenderer<>();
+        TableColumn<Result> raceIdColumn = new Column<>("ID", Result::getResultId);
+        TableColumn<Result> driverIdColumn = new Column<>("ERSTER", Result::getFirstId);
+        TableColumn<Result> secondDriverIdColumn = new Column<>("ZWEITER", Result::getSecondId);
+        TableColumn<Result> thirdDriverIdColumn = new Column<>("DRITTER", Result::getThirdId);
+        resultTableRenderer.renderTable(results, raceIdColumn, driverIdColumn, secondDriverIdColumn, thirdDriverIdColumn);
         System.out.println();
     }
 

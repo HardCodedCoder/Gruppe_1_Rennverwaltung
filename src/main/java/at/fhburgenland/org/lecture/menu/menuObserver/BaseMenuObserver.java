@@ -1,10 +1,7 @@
 package at.fhburgenland.org.lecture.menu.menuObserver;
 
 import at.fhburgenland.org.lecture.BaseEntityManager;
-import at.fhburgenland.org.lecture.entities.Driver;
-import at.fhburgenland.org.lecture.entities.Outage;
-import at.fhburgenland.org.lecture.entities.Race;
-import at.fhburgenland.org.lecture.entities.RaceTrack;
+import at.fhburgenland.org.lecture.entities.*;
 import at.fhburgenland.org.lecture.enumerations.MenuPages;
 import at.fhburgenland.org.lecture.interfaces.Menu;
 import at.fhburgenland.org.lecture.menu.MenuItem;
@@ -44,7 +41,15 @@ public abstract class BaseMenuObserver implements MenuObserver {
                 Outage.class, new BaseEntityManager<Outage>(
                         Persistence.createEntityManagerFactory("ausfall").createEntityManager(), Outage.class),
                 RaceTrack.class, new BaseEntityManager<RaceTrack>(
-                        Persistence.createEntityManagerFactory("rennstrecke").createEntityManager(), RaceTrack.class)
+                        Persistence.createEntityManagerFactory("rennstrecke").createEntityManager(), RaceTrack.class),
+                Result.class, new BaseEntityManager<Result>(
+                        Persistence.createEntityManagerFactory("ergebnis").createEntityManager(), Result.class),
+                Sponsor.class, new BaseEntityManager<Sponsor>(
+                        Persistence.createEntityManagerFactory("sponsor").createEntityManager(), Sponsor.class),
+                Team.class, new BaseEntityManager<Team>(
+                        Persistence.createEntityManagerFactory("team").createEntityManager(), Team.class),
+                Vehicle.class, new BaseEntityManager<Vehicle>(
+                        Persistence.createEntityManagerFactory("fahrzeug").createEntityManager(), Vehicle.class)
                 );
     }
 

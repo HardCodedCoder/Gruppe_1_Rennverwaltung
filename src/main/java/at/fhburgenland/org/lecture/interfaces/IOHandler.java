@@ -92,4 +92,12 @@ public interface IOHandler {
     void renderOutageTable(List outages);
 
     void renderRaceTrackTable(List raceTracks);
+
+    void renderVehicleTable(List vehicles);
+
+    void renderTeamTable(List teams);
+
+    void renderSponsorTable(List sponsors);
+
+    void renderResultTable(List results);
 }

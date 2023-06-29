@@ -1,10 +1,7 @@
 package at.fhburgenland.org.lecture.menu.menuObserver;
 
 import at.fhburgenland.org.lecture.BaseEntityManager;
-import at.fhburgenland.org.lecture.entities.Driver;
-import at.fhburgenland.org.lecture.entities.Outage;
-import at.fhburgenland.org.lecture.entities.Race;
-import at.fhburgenland.org.lecture.entities.RaceTrack;
+import at.fhburgenland.org.lecture.entities.*;
 import at.fhburgenland.org.lecture.enumerations.MenuPages;
 import at.fhburgenland.org.lecture.interfaces.Service;
 
@@ -29,8 +26,32 @@ public class ReadObserver extends BaseMenuObserver {
             case OUTAGE -> this.executeReadForOutage();
             case RACE -> this.executeReadForRace();
             case RACETRACK -> this.executeReadForRaceTrack();
+            case RESULT -> this.executeReadForResult();
+            case SPONSOR -> this.executeReadForSponsor();
+            case TEAM -> this.executeReadForTeam();
+            case VEHICLE -> this.executeReadForVehicle();
             default -> System.out.println("Test");
         }
+    }
+
+    private void executeReadForVehicle() {
+        var vehicles = entityManagerMap.get(Vehicle.class).readAll();
+        this.service.getIOHandler().renderVehicleTable(vehicles);
+    }
+
+    private void executeReadForTeam() {
+        var teams = entityManagerMap.get(Team.class).readAll();
+        this.service.getIOHandler().renderTeamTable(teams);
+    }
+
+    private void executeReadForSponsor() {
+        var sponsors = entityManagerMap.get(Sponsor.class).readAll();
+        this.service.getIOHandler().renderSponsorTable(sponsors);
+    }
+
+    private void executeReadForResult() {
+        var results = entityManagerMap.get(Result.class).readAll();
+        this.service.getIOHandler().renderResultTable(results);
     }
 
     private void executeReadForRaceTrack() {

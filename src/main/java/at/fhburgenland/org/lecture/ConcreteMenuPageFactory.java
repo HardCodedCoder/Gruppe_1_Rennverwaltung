@@ -71,11 +71,11 @@ public class ConcreteMenuPageFactory implements MenuPageFactory {
                 new MenuItem(MenuPages.OUTAGE.getLabel(), 2, new ShowOutageMenuObserver(this.hostingService), MenuPages.MAIN),
                 new MenuItem(MenuPages.RACE.getLabel(), 3, new ShowRaceMenuObserver(this.hostingService), MenuPages.RACE),
                 new MenuItem(MenuPages.RACETRACK.getLabel(), 4, new ShowRaceTrackMenuObserver(this.hostingService), MenuPages.RACETRACK),
-                new MenuItem(MenuPages.RESULT.getLabel(), 5, null, MenuPages.RESULT),
-                new MenuItem(MenuPages.SPONSOR.getLabel(), 6, null, MenuPages.SPONSOR),
-                new MenuItem(MenuPages.TEAM.getLabel(), 7, null, MenuPages.TEAM),
-                new MenuItem(MenuPages.VEHICLE.getLabel(), 8, null, MenuPages.VEHICLE),
-                new MenuItem(MenuPages.QUERY.getLabel(), 9, null, MenuPages.QUERY),
+                new MenuItem(MenuPages.RESULT.getLabel(), 5, new ShowResultMenuObserver(this.hostingService), MenuPages.RESULT),
+                new MenuItem(MenuPages.SPONSOR.getLabel(), 6, new ShowSponsorMenuObserver(this.hostingService), MenuPages.SPONSOR),
+                new MenuItem(MenuPages.TEAM.getLabel(), 7, new ShowTeamMenuObserver(this.hostingService), MenuPages.TEAM),
+                new MenuItem(MenuPages.VEHICLE.getLabel(), 8, new ShowVehicleMenuObserver(this.hostingService), MenuPages.VEHICLE),
+                new MenuItem(MenuPages.QUERY.getLabel(), 9, new ExecuteQueryObserver(this.hostingService), MenuPages.QUERY),
                 new MenuItem(MenuPages.EXIT.getLabel(), 10, new TerminateApplicationObserver(this.hostingService), MenuPages.EXIT)
         );
     }
