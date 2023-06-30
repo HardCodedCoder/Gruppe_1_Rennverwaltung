@@ -66,4 +66,15 @@ public abstract class BaseMenuObserver implements MenuObserver {
         }
         menu.selectCurrentPage(MenuPages.MAIN);
     }
+
+    protected void executeReadForVehicle() {
+        var vehicles = entityManagerMap.get(Vehicle.class).readAll();
+        this.service.getIOHandler().renderVehicleTable(vehicles);
+    }
+
+
+    protected void executeReadForTeam() {
+        var teams = entityManagerMap.get(Team.class).readAll();
+        this.service.getIOHandler().renderTeamTable(teams);
+    }
 }

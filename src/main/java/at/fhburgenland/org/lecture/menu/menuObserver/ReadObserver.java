@@ -34,16 +34,6 @@ public class ReadObserver extends BaseMenuObserver {
         }
     }
 
-    private void executeReadForVehicle() {
-        var vehicles = entityManagerMap.get(Vehicle.class).readAll();
-        this.service.getIOHandler().renderVehicleTable(vehicles);
-    }
-
-    private void executeReadForTeam() {
-        var teams = entityManagerMap.get(Team.class).readAll();
-        this.service.getIOHandler().renderTeamTable(teams);
-    }
-
     private void executeReadForSponsor() {
         var sponsors = entityManagerMap.get(Sponsor.class).readAll();
         this.service.getIOHandler().renderSponsorTable(sponsors);

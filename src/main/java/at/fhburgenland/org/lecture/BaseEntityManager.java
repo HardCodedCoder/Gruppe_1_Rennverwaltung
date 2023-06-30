@@ -16,17 +16,19 @@ public class BaseEntityManager<T> {
         this.entityManager = entityManager;
     }
 
-    public void create(T entity) {
+    public boolean create(T entity) {
         if (!this.entityManager.isOpen())
             throw new IllegalStateException("The entity manager is not open!");
         try {
             this.entityManager.getTransaction().begin();
             this.entityManager.persist(entity);
             this.entityManager.getTransaction().commit();
+            return true;
         } catch (Exception e) {
             if (entityManager.getTransaction() != null)
                 entityManager.getTransaction().rollback();
             System.err.println("An error occurred while creating entity: " + entity.toString() + ".");
+            return false;
         }
     }
 
