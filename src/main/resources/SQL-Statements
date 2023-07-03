@@ -9,75 +9,75 @@ DROP TABLE IF EXISTS sponsor;
 
 
 CREATE TABLE sponsor (
-	sponsor_ID SERIAL,
+	sponsor_id SERIAL,
 	name VARCHAR(20) NOT NULL,
-	PRIMARY KEY (sponsor_ID)
+	PRIMARY KEY (sponsor_id)
 );
 
 CREATE TABLE team (
-	team_ID SERIAL,
+	team_id SERIAL,
 	name VARCHAR(20) NOT NULL,
 	gruendungsjahr INT NOT NULL,
-	sponsor_ID INT NOT NULL,
-	PRIMARY KEY (team_ID),
-	FOREIGN KEY (sponsor_ID) REFERENCES sponsor (sponsor_ID)
+	sponsor_id INT NOT NULL,
+	PRIMARY KEY (team_id),
+	FOREIGN KEY (sponsor_id) REFERENCES sponsor (sponsor_id)
 );
 
 CREATE TABLE fahrzeug (
-	fahrzeug_ID SERIAL,
+	fahrzeug_id SERIAL,
 	marke VARCHAR(50) NOT null,
 	modell VARCHAR(50) NOT null,
 	baujahr INT NOT null,
-	PRIMARY KEY (fahrzeug_ID)
+	PRIMARY KEY (fahrzeug_id)
 );
 
 CREATE TABLE fahrer (
-	fahrer_ID SERIAL,
+	fahrer_id SERIAL,
 	vorname VARCHAR(50) NOT NULL,
 	nachname VARCHAR(50) NOT NULL,
 	nationalitaet VARCHAR(50) NOT NULL,
-	fahrzeug_ID INT NOT NULL,
-	team_ID INT NOT NULL,
-	PRIMARY KEY (fahrer_ID),
-	FOREIGN KEY (fahrzeug_ID) REFERENCES fahrzeug(fahrzeug_ID),
-	FOREIGN KEY (team_ID) REFERENCES team (team_ID)
+	fahrzeug_id INT NOT NULL,
+	team_id INT NOT NULL,
+	PRIMARY KEY (fahrer_id),
+	FOREIGN KEY (fahrzeug_id) REFERENCES fahrzeug(fahrzeug_id),
+	FOREIGN KEY (team_id) REFERENCES team (team_id)
 );
 
 CREATE TABLE rennstrecke (
-	rennstrecken_ID SERIAL,
+	rennstrecken_id SERIAL,
 	Name VARCHAR(20) NOT NULL,
 	bundesland VARCHAR(20) NOT NULL,
 	stadt VARCHAR(15) NOT NULL,
-	PRIMARY KEY (rennstrecken_ID)
+	PRIMARY KEY (rennstrecken_id)
 );
 
 CREATE TABLE rennen (
-	rennen_ID SERIAL,
+	rennen_id SERIAL,
 	name VARCHAR(50) NOT NULL,
 	datum date NOT NULL,
-	rennstrecken_ID INT,
-	PRIMARY KEY (rennen_ID),
-	FOREIGN KEY (rennstrecken_ID) REFERENCES rennstrecke(rennstrecken_ID)
+	rennstrecken_id INT,
+	PRIMARY KEY (rennen_id),
+	FOREIGN KEY (rennstrecken_id) REFERENCES rennstrecke(rennstrecken_id)
 );
 
 CREATE TABLE ergebnis (
-	rennen_ID INT,
+	rennen_id INT,
 	erster INT NOT NULL,
 	zweiter INT NOT NULL,
 	dritter INT,
-	PRIMARY KEY(rennen_ID, erster, zweiter, dritter),
-	FOREIGN KEY (erster) REFERENCES fahrer (fahrer_ID),
-	FOREIGN KEY (zweiter) REFERENCES fahrer (fahrer_ID),
-	FOREIGN KEY (dritter) REFERENCES fahrer (fahrer_ID)
+	PRIMARY KEY(rennen_id, erster, zweiter, dritter),
+	FOREIGN KEY (erster) REFERENCES fahrer (fahrer_id),
+	FOREIGN KEY (zweiter) REFERENCES fahrer (fahrer_id),
+	FOREIGN KEY (dritter) REFERENCES fahrer (fahrer_id)
 );
 
 CREATE TABLE ausfall (
-	fahrerID INT NOT NULL,
-	rennenID INT NOT NULL,
+	fahrer_id INT NOT NULL,
+	rennen_id INT NOT NULL,
 	ausfallszenario VARCHAR(100) NOT NULL,
-	PRIMARY KEY (fahrerID, RennenID),
-	FOREIGN KEY (fahrerID) REFERENCES Fahrer(fahrer_ID),
-	FOREIGN KEY (rennenID) REFERENCES Rennen(rennen_ID)
+	PRIMARY KEY (fahrer_id, Rennen_id),
+	FOREIGN KEY (fahrer_id) REFERENCES Fahrer(fahrer_id),
+	FOREIGN KEY (rennen_id) REFERENCES Rennen(rennen_id)
 );
 
 INSERT INTO sponsor values (42,'Nugget Inc.');
@@ -95,12 +95,12 @@ INSERT INTO fahrzeug values (1003,'Ferrari','SF22',2022);
 INSERT INTO fahrzeug values (1004,'Alpine Tauri','A522',2022);
 INSERT INTO fahrzeug values (1005,'Alpine','AT03',2022);
 
-INSERT INTO fahrer values (1,'Andreas','Graf','Österreich',1000,1);
-INSERT INTO fahrer values (2,'Nugget','Meister','England',1001,1);
-INSERT INTO fahrer values (3,'Akira','Blacky','Italien',1002,2);
-INSERT INTO fahrer values (4,'Ludmilla','Steinschreck','Taiwan',1003,2);
-INSERT INTO fahrer values (5,'Martin','Dorak','Uganda',1004,3);
-INSERT INTO fahrer values (6,'Hassan','Sajid Naseer','Schweden',1005,3);
+INSERT INTO fahrer values ('Andreas','Graf','Österreich',1000,1);
+INSERT INTO fahrer values ('Nugget','Meister','England',1001,1);
+INSERT INTO fahrer values ('Akira','Blacky','Italien',1002,2);
+INSERT INTO fahrer values ('Ludmilla','Steinschreck','Taiwan',1003,2);
+INSERT INTO fahrer values ('Martin','Dorak','Uganda',1004,3);
+INSERT INTO fahrer values ('Hassan','Sajid Naseer','Schweden',1005,3);
 
 INSERT INTO rennstrecke values (1,'Red Bull Ring','Steiermark','Spielberg');
 INSERT INTO rennstrecke values (2,'Wachau Ring','Niederösterreich','Melk');
