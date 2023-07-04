@@ -80,40 +80,40 @@ CREATE TABLE ausfall (
 	FOREIGN KEY (rennen_id) REFERENCES Rennen(rennen_id)
 );
 
-INSERT INTO sponsor values (42,'Nugget Inc.');
-INSERT INTO sponsor values (69,'Eros Ramazzotti');
-INSERT INTO sponsor values (70,'Bad Dragon');
+INSERT INTO sponsor(name) values ('Nugget Inc.');
+INSERT INTO sponsor(name) values ('Eros Ramazzotti');
+INSERT INTO sponsor(name) values ('Bad Dragon');
 
-INSERT INTO team values (1,'AMG Petronas',1997,42);
-INSERT INTO team values (2,'Scuderia Ferrari',1996,69);
-INSERT INTO team values (3,'Lada',1973,70);
+INSERT INTO team values(name, gruendungsjahr, sponsor_id) ('AMG Petronas',1997,1);
+INSERT INTO team values(name, gruendungsjahr, sponsor_id) ('Scuderia Ferrari',1996,2);
+INSERT INTO team values(name, gruendungsjahr, sponsor_id) ('Lada',1973,3);
 
-INSERT INTO fahrzeug values (1000,'Mercedes','F1 W13 E Performance',2022);
-INSERT INTO fahrzeug values (1001,'Reb Bull','RB18',2022);
-INSERT INTO fahrzeug values (1002,'Ferrari','SF22',2022);
-INSERT INTO fahrzeug values (1003,'Ferrari','SF22',2022);
-INSERT INTO fahrzeug values (1004,'Alpine Tauri','A522',2022);
-INSERT INTO fahrzeug values (1005,'Alpine','AT03',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values ('Mercedes','F1 W13 E Performance',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values ('Reb Bull','RB18',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values ('Ferrari','SF22',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values ('Ferrari','SF22',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values ('Alpine Tauri','A522',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values (Alpine','AT03',2022);
 
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Andreas','Graf','Österreich',1000,1);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Nugget','Meister','England',1001,1);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Akira','Blacky','Italien',1002,2);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Ludmilla','Steinschreck','Taiwan',1003,2);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Martin','Dorak','Uganda',1004,3);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Hassan','Sajid Naseer','Schweden',1005,3);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Andreas','Graf','Österreich',1,1);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Nugget','Meister','England',1,1);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Akira','Blacky','Italien',2,2);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Ludmilla','Steinschreck','Taiwan',3,2);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Martin','Dorak','Uganda',4,3);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Hassan','Sajid Naseer','Schweden',5,3);
 
-INSERT INTO rennstrecke values (1,'Red Bull Ring','Steiermark','Spielberg');
-INSERT INTO rennstrecke values (2,'Wachau Ring','Niederösterreich','Melk');
-INSERT INTO rennstrecke values (3,'Wiener Ring','Wien','Wien');
+INSERT INTO rennstrecke(name, bundesland, stadt) values ('Red Bull Ring','Steiermark','Spielberg');
+INSERT INTO rennstrecke(name, bundesland, stadt) values ('Wachau Ring','Niederösterreich','Melk');
+INSERT INTO rennstrecke(name, bundesland, stadt) values ('Wiener Ring','Wien','Wien');
 
-INSERT INTO rennen values (1,'Großer Preis von Steiermark','2021-07-04',1);
-INSERT INTO rennen values (2,'Großer Preis von Niederösterreich','2021-06-27',2);
-INSERT INTO rennen values (3,'Großer Preis von Wien','2021-06-20',3);
+INSERT INTO rennen(name, datum, rennstrecken_id) values ('Großer Preis von Steiermark','2021-07-04',1);
+INSERT INTO rennen(name, datum, rennstrecken_id) values ('Großer Preis von Niederösterreich','2021-06-27',2);
+INSERT INTO rennen(name, datum, rennstrecken_id) values ('Großer Preis von Wien','2021-06-20',3);
 
-INSERT INTO ergebnis values (1,1,2,3);
-INSERT INTO ergebnis values (2,3,2,1);
-INSERT INTO ergebnis values (3,6,4,3);
+INSERT INTO ergebnis(rennen_id, erster, zweiter, dritter) values (1,1,2,3);
+INSERT INTO ergebnis(rennen_id, erster, zweiter, dritter) values (2,3,2,1);
+INSERT INTO ergebnis(rennen_id, erster, zweiter, dritter) values (3,6,4,3);
 
-INSERT INTO ausfall values (5,1,'Unfall');
-INSERT INTO ausfall values (5,2,'Motorschaden');
-INSERT INTO ausfall values (4,1,'Unfall');
+INSERT INTO ausfall(fahrer_id, rennen_id, ausfallszenario) values (5,1,'Unfall');
+INSERT INTO ausfall(fahrer_id, rennen_id, ausfallszenario) values (5,2,'Motorschaden');
+INSERT INTO ausfall(fahrer_id, rennen_id, ausfallszenario) values (4,1,'Unfall');
