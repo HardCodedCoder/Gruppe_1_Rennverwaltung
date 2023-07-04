@@ -95,12 +95,12 @@ INSERT INTO fahrzeug values (1003,'Ferrari','SF22',2022);
 INSERT INTO fahrzeug values (1004,'Alpine Tauri','A522',2022);
 INSERT INTO fahrzeug values (1005,'Alpine','AT03',2022);
 
-INSERT INTO fahrer values ('Andreas','Graf','Österreich',1000,1);
-INSERT INTO fahrer values ('Nugget','Meister','England',1001,1);
-INSERT INTO fahrer values ('Akira','Blacky','Italien',1002,2);
-INSERT INTO fahrer values ('Ludmilla','Steinschreck','Taiwan',1003,2);
-INSERT INTO fahrer values ('Martin','Dorak','Uganda',1004,3);
-INSERT INTO fahrer values ('Hassan','Sajid Naseer','Schweden',1005,3);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Andreas','Graf','Österreich',1000,1);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Nugget','Meister','England',1001,1);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Akira','Blacky','Italien',1002,2);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Ludmilla','Steinschreck','Taiwan',1003,2);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Martin','Dorak','Uganda',1004,3);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Hassan','Sajid Naseer','Schweden',1005,3);
 
 INSERT INTO rennstrecke values (1,'Red Bull Ring','Steiermark','Spielberg');
 INSERT INTO rennstrecke values (2,'Wachau Ring','Niederösterreich','Melk');
