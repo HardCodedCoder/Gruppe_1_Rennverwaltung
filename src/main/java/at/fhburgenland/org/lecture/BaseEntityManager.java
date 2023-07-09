@@ -9,7 +9,7 @@ import java.util.List;
 public class BaseEntityManager<T> {
     protected EntityManager entityManager;
 
-    private final Class<T> entityClass;
+    protected final Class<T> entityClass;
 
     public BaseEntityManager(EntityManager entityManager, Class<T> entityClass) {
         this.entityClass = entityClass;

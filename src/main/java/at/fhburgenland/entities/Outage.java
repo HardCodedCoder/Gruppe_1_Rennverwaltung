@@ -21,6 +21,9 @@ public class Outage {
     @Column(name = "rennen_id", updatable = false, nullable = false, unique = true)
     private int raceId;
 
+    @Column(name = "ausfallszenario", nullable = false)
+    private String reason;
+
     @ManyToOne
     @JoinColumn(name = "rennen_id", insertable = false, updatable = false)
     private Race race;
@@ -28,4 +31,18 @@ public class Outage {
     @OneToOne
     @JoinColumn(name = "fahrer_id", insertable = false, updatable = false)
     private Driver driver;
+
+    public Outage() {
+
+    }
+
+    public Outage(int driverId, int raceId) {
+        this.driverId = driverId;
+        this.raceId = raceId;
+    }
+    public Outage(int driverId, int raceId, String reason) {
+        this.driverId = driverId;
+        this.raceId = raceId;
+        this.reason = reason;
+    }
 }

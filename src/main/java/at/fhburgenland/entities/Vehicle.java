@@ -40,4 +40,20 @@ public class Vehicle {
 
     @OneToOne(mappedBy = "vehicle")
     private Driver driver;
+
+    public Vehicle() {
+
+    }
+
+    /**
+     * Initializes a new instance of the Vehicle class.
+     * @param vehicleBrand The brand of the vehicle.
+     * @param vehicleModel The model.
+     * @param constructionYear The year when the vehicle was constructed.
+     */
+    public Vehicle(String vehicleBrand, String vehicleModel, int constructionYear) {
+        this.brand = vehicleBrand;
+        this.model = vehicleModel;
+        this.constructionYear = constructionYear;
+    }
 }

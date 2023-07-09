@@ -3,14 +3,13 @@ package at.fhburgenland.menu.menuObserver;
 import at.fhburgenland.RaceManagementService;
 import at.fhburgenland.entities.*;
 import at.fhburgenland.interfaces.Service;
-import at.fhburgenland.entities.*;
 import at.fhburgenland.enumerations.MenuPages;
 
 public class ReadObserver extends BaseMenuObserver {
     /**
      * Initializes a new instance of the BaseMenuObserver class.
      *
-     * @param service   The service.
+     * @param service The service.
      */
     public ReadObserver(Service service) {
         super(service);
@@ -19,8 +18,7 @@ public class ReadObserver extends BaseMenuObserver {
 
     @Override
     public void update(MenuPages fromMenu) {
-        switch (fromMenu)
-        {
+        switch (fromMenu) {
             case DRIVER -> this.executeReadForDriver();
             case OUTAGE -> this.executeReadForOutage();
             case RACE -> this.executeReadForRace();
@@ -38,11 +36,6 @@ public class ReadObserver extends BaseMenuObserver {
         this.service.getIOHandler().renderSponsorTable(sponsors);
     }
 
-    private void executeReadForResult() {
-        var results = RaceManagementService.getEntityManagerMap().get(Result.class).readAll();
-        this.service.getIOHandler().renderResultTable(results);
-    }
-
     private void executeReadForRaceTrack() {
         var raceTracks = RaceManagementService.getEntityManagerMap().get(RaceTrack.class).readAll();
         this.service.getIOHandler().renderRaceTrackTable(raceTracks);
@@ -51,15 +44,5 @@ public class ReadObserver extends BaseMenuObserver {
     private void executeReadForOutage() {
         var outages = RaceManagementService.getEntityManagerMap().get(Outage.class).readAll();
         this.service.getIOHandler().renderOutageTable(outages);
-    }
-
-    private void executeReadForRace() {
-        var races = RaceManagementService.getEntityManagerMap().get(Race.class).readAll();
-        this.service.getIOHandler().renderRaceTable(races);
-    }
-
-    private void executeReadForDriver() {
-       var drivers = RaceManagementService.getEntityManagerMap().get(Driver.class).readAll();
-        this.service.getIOHandler().renderDriverTable(drivers);
     }
 }

@@ -8,7 +8,6 @@ import at.fhburgenland.menu.MenuItem;
 import at.fhburgenland.enumerations.MenuPages;
 import at.fhburgenland.exceptions.InstantiateServiceException;
 import at.fhburgenland.interfaces.Service;
-import at.fhburgenland.menu.menuObserver.BaseMenuObserver;
 import at.fhburgenland.validators.IOHandlerValidator;
 import at.fhburgenland.view.ConsoleMenu;
 import lombok.extern.slf4j.Slf4j;
@@ -47,15 +46,21 @@ public class RaceManagementService implements Service {
 
     private static final Map<Class, BaseEntityManager> entityManagerMap = initializeEntityManagerMap();
 
+    // TODO: Does not need to be static anymore as Service exists only once.
     public static Map<Class, BaseEntityManager> getEntityManagerMap() { return entityManagerMap; }
 
+    /**
+     * Initializes all entity managers to have them once running in memory. Creating and establishing for each
+     * transaction an entity manager costs a lot of performance (time).
+     * @return The Initialized entity managers stored in a map.
+     */
     private static Map<Class, BaseEntityManager> initializeEntityManagerMap()
     {
         return Map.of(
                 Driver.class, new BaseEntityManager<Driver>(
                         Persistence.createEntityManagerFactory("fahrer").createEntityManager(), Driver.class),
-                Race.class, new BaseEntityManager<Race>(
-                        Persistence.createEntityManagerFactory("rennen").createEntityManager(), Race.class),
+                Race.class, new RaceEntityManager(
+                        Persistence.createEntityManagerFactory("rennen").createEntityManager()),
                 Outage.class, new BaseEntityManager<Outage>(
                         Persistence.createEntityManagerFactory("ausfall").createEntityManager(), Outage.class),
                 RaceTrack.class, new BaseEntityManager<RaceTrack>(

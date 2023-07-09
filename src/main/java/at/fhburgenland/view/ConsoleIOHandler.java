@@ -1,30 +1,26 @@
 package at.fhburgenland.view;
 
+import at.fhburgenland.RaceManagementService;
 import at.fhburgenland.entities.*;
 import at.fhburgenland.enumerations.BackgroundColor;
 import at.fhburgenland.enumerations.ForegroundColor;
-import at.fhburgenland.interfaces.IOHandler;
-import at.fhburgenland.interfaces.Menu;
-import at.fhburgenland.interfaces.MenuPage;
-import at.fhburgenland.interfaces.TableColumn;
+import at.fhburgenland.interfaces.*;
 import at.fhburgenland.menu.MenuItem;
 import at.fhburgenland.utility.Utility;
 import at.fhburgenland.validators.MenuItemInputValidator;
 import at.fhburgenland.view.table.Column;
 import at.fhburgenland.view.table.TableRenderer;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.text.MessageFormat;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.util.*;
 
-
+@Slf4j
 /**
  * This class manages the input and output from and to the console and decouples UI from the Business Logic.
  */
-public class ConsoleIOHandler implements IOHandler
-{
+public class ConsoleIOHandler implements IOHandler {
     /**
      * Color code to reset the color.
      */
@@ -43,8 +39,7 @@ public class ConsoleIOHandler implements IOHandler
     /**
      * Initializes a new instance of the ConsoleIOHandler class.
      */
-    public ConsoleIOHandler()
-    {
+    public ConsoleIOHandler() {
         this.inputScanner = new Scanner(System.in);
     }
 
@@ -55,18 +50,17 @@ public class ConsoleIOHandler implements IOHandler
      * @return An integer.
      */
     @Override
-    public Number getNumberFromUser(String prompt, boolean skipValueCheck)
-    {
+    public Number getNumberFromUser(String prompt, boolean skipValueCheck) {
         boolean correctInput = false;
         Number result = null;
 
         while (!correctInput) {
-            this.print(prompt);
+            this.print(prompt + ": ");
             String userinput = "";
             try {
                 userinput = this.inputScanner.nextLine();
             } catch (NoSuchElementException e) {
-                this.printErrorMessage("Error: Please type in a number!");
+                this.printErrorMessage("Unzulässiges Format! Bitte gib eine Zahl ein.");
             }
 
             try {
@@ -82,7 +76,7 @@ public class ConsoleIOHandler implements IOHandler
                     this.println();
                     return 0;
                 }
-                this.printErrorMessage(e.getMessage());
+                this.printErrorMessage("Unzulässiges Format! Bitte gib eine Zahl ein.");
             }
         }
 
@@ -90,8 +84,7 @@ public class ConsoleIOHandler implements IOHandler
         return result;
     }
 
-    public void renderDriverTable(List<Driver> data)
-    {
+    public void renderDriverTable(List<Driver> data) {
         System.out.println();
         TableRenderer<Driver> driverTableRenderer = new TableRenderer<>();
         TableColumn<Driver> driverIdColumn = new Column<>("ID", Driver::getDriverId);
@@ -112,30 +105,23 @@ public class ConsoleIOHandler implements IOHandler
      * @return The selected menu item.
      */
     @Override
-    public MenuItem getMenuItemSelection(MenuPage consolePage)
-    {
+    public MenuItem getMenuItemSelection(MenuPage consolePage) {
         boolean correctInput = false;
-        int highestMenuItemNumber = consolePage.getMenuItems().get(consolePage.getMenuItems().size() -1).getNumber();
+        int highestMenuItemNumber = consolePage.getMenuItems().get(consolePage.getMenuItems().size() - 1).getNumber();
         MenuItemInputValidator validator = new MenuItemInputValidator(highestMenuItemNumber);
         MenuItem item = null;
 
-        while (!correctInput)
-        {
-            int userInput = getNumberFromUser("Please select a menuitem-number from the list above: ", false).intValue();
-            if (validator.validateCorrectMenuSelectionInput(userInput))
-            {
+        while (!correctInput) {
+            int userInput = getNumberFromUser("Please select a menuitem-number from the list above", false).intValue();
+            if (validator.validateCorrectMenuSelectionInput(userInput)) {
                 correctInput = true;
-                for (MenuItem menuItem : consolePage.getMenuItems())
-                {
-                    if (menuItem.getNumber() == userInput)
-                    {
+                for (MenuItem menuItem : consolePage.getMenuItems()) {
+                    if (menuItem.getNumber() == userInput) {
                         item = menuItem;
                         break;
                     }
                 }
-            }
-            else
-            {
+            } else {
                 this.printErrorMessage(
                         MessageFormat.format("You can not select any number than from {0} to {1}",
                                 validator.getLowestMenuItemNumber(),
@@ -151,8 +137,7 @@ public class ConsoleIOHandler implements IOHandler
      * Prints the menu to the user interface.
      */
     @Override
-    public void printMenu(Menu toPrint)
-    {
+    public void printMenu(Menu toPrint) {
         int menuWidth = Utility.calculatePageWidth(toPrint) + MENU_WIDTH_PADDING;
         this.drawLine(menuWidth);
         this.printColoredLn(toPrint.getCurrent().getMenuPageType().getLabel(), ForegroundColor.MAGENTA, BackgroundColor.BLACK);
@@ -164,11 +149,11 @@ public class ConsoleIOHandler implements IOHandler
 
     /**
      * Prints an error message in a specific format to the console.
+     *
      * @param toPrint The error message to print to the console.
      */
     @Override
-    public void printErrorMessage(String toPrint)
-    {
+    public void printErrorMessage(String toPrint) {
         this.println();
         this.printColored("[ERROR]: ", ForegroundColor.RED);
         this.println(toPrint);
@@ -193,11 +178,9 @@ public class ConsoleIOHandler implements IOHandler
      * @param consolePage The console page to print.
      */
     @Override
-    public void printMenuPage(MenuPage consolePage)
-    {
+    public void printMenuPage(MenuPage consolePage) {
         ForegroundColor color = ForegroundColor.BLUE;
-        for (MenuItem item : consolePage.getMenuItems())
-        {
+        for (MenuItem item : consolePage.getMenuItems()) {
             String toPrint = item.toString();
             this.printColored(Character.toString(toPrint.charAt(0)), color);
             System.out.println(toPrint.substring(1));
@@ -210,39 +193,38 @@ public class ConsoleIOHandler implements IOHandler
      *
      * @param numberOfSigns The total number of signs to draw.
      */
-    public void drawLine(int numberOfSigns)
-    {
+    public void drawLine(int numberOfSigns) {
         System.out.println("━".repeat(numberOfSigns));
     }
 
     /**
      * Prints a text to the console.
-     * @param toPrint The text to print.
+     *
+     * @param toPrint         The text to print.
      * @param foregroundColor The foreground color of the text.
      */
-    private void printColored(String toPrint, ForegroundColor foregroundColor)
-    {
+    private void printColored(String toPrint, ForegroundColor foregroundColor) {
         System.out.print(foregroundColor.getCode() + toPrint + ANSI_RESET);
     }
 
     /**
      * Prints a colored text to the console followed by a newline char.
-     * @param toPrint The text to print.
+     *
+     * @param toPrint         The text to print.
      * @param foregroundColor The foreground color of the text.
      * @param backgroundColor The background color of the text.
      */
-    public void printColoredLn(String toPrint, ForegroundColor foregroundColor, BackgroundColor backgroundColor)
-    {
+    public void printColoredLn(String toPrint, ForegroundColor foregroundColor, BackgroundColor backgroundColor) {
         System.out.println(foregroundColor.getCode() + backgroundColor.getCode() + toPrint + ANSI_RESET);
     }
 
     /**
      * Prints a colored text to the console followed by a newline char.
-     * @param toPrint The text to print.
+     *
+     * @param toPrint         The text to print.
      * @param foregroundColor The foreground color of the text.
      */
-    public void printColoredLn(String toPrint, ForegroundColor foregroundColor)
-    {
+    public void printColoredLn(String toPrint, ForegroundColor foregroundColor) {
         System.out.println(foregroundColor.getCode() + toPrint + ANSI_RESET);
     }
 
@@ -257,16 +239,12 @@ public class ConsoleIOHandler implements IOHandler
     public String askUserForInput(String prompt, boolean forceInput) {
         boolean exit = !forceInput;
         String input;
-        do
-        {
+        do {
             System.out.print(prompt + ": ");
             input = this.inputScanner.nextLine();
-            if (forceInput && input.isEmpty())
-            {
+            if (forceInput && input.isEmpty()) {
                 this.printErrorMessage("Your input must not be empty! Please try again!");
-            }
-            else
-            {
+            } else {
                 exit = true;
             }
         } while (!exit);
@@ -312,7 +290,8 @@ public class ConsoleIOHandler implements IOHandler
         TableRenderer<Outage> outageTableRenderer = new TableRenderer<>();
         TableColumn<Outage> driverId = new Column<>("FAHRER ID", Outage::getDriverId);
         TableColumn<Outage> raceId = new Column<>("RENNEN ID", Outage::getRaceId);
-        outageTableRenderer.renderTable(outages, driverId, raceId);
+        TableColumn<Outage> reasonColumn = new Column<>("AUSFALLSZENARIO", Outage::getReason);
+        outageTableRenderer.renderTable(outages, driverId, raceId, reasonColumn);
         System.out.println();
     }
 
@@ -366,7 +345,7 @@ public class ConsoleIOHandler implements IOHandler
     public void renderResultTable(List results) {
         System.out.println();
         TableRenderer<Result> resultTableRenderer = new TableRenderer<>();
-        TableColumn<Result> raceIdColumn = new Column<>("ID", Result::getResultId);
+        TableColumn<Result> raceIdColumn = new Column<>("RENNEN_ID", Result::getRaceId);
         TableColumn<Result> driverIdColumn = new Column<>("ERSTER", Result::getFirstId);
         TableColumn<Result> secondDriverIdColumn = new Column<>("ZWEITER", Result::getSecondId);
         TableColumn<Result> thirdDriverIdColumn = new Column<>("DRITTER", Result::getThirdId);
@@ -375,15 +354,11 @@ public class ConsoleIOHandler implements IOHandler
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public void waitForConfirmation()
-    {
+    public void waitForConfirmation() {
         System.out.print("Press any key to continue...");
-        try
-        {
+        try {
             System.in.read();
-        }
-        catch (IOException e)
-        {
+        } catch (IOException e) {
             this.printErrorMessage(e.getMessage());
         }
 
@@ -393,15 +368,13 @@ public class ConsoleIOHandler implements IOHandler
     /**
      * Prints all values of an enumeration to the console.
      */
-    public <T extends Enum<T>> void printEnumValues(Class<T> enumClass)
-    {
+    public <T extends Enum<T>> void printEnumValues(Class<T> enumClass) {
         String header = enumClass.getSimpleName().toUpperCase() + "-VALUES:";
         this.printColoredLn(header, ForegroundColor.BLACK, BackgroundColor.MAGENTA);
         this.drawLine(header.length());
         ForegroundColor color = ForegroundColor.MAGENTA;
         int counter = 1;
-        for (T enumValue : enumClass.getEnumConstants())
-        {
+        for (T enumValue : enumClass.getEnumConstants()) {
             this.printColoredLn(enumValue.toString(), color);
             if (counter % 2 != 0)
                 color = color.next();
@@ -414,7 +387,6 @@ public class ConsoleIOHandler implements IOHandler
     }
 
 
-
     /**
      * Prints a newline sign to the console to switch to the next line.
      */
@@ -424,10 +396,57 @@ public class ConsoleIOHandler implements IOHandler
 
     /**
      * Prints a message to the console without newline.
+     *
      * @param toPrint The text to print.
      */
-    public void print(String toPrint)
-    {
+    public void print(String toPrint) {
         System.out.print(toPrint);
     }
+
+    public int getEntityIdFromUser(ReadEntity readEntityFunctionInterface, Class clazz, String prompt, String errorMessage, Service service) {
+        boolean exit = false;
+        int id = 0;
+        while (!exit) {
+            readEntityFunctionInterface.readEntity();
+            id = this.getNumberFromUser(prompt, true).intValue();
+            if (RaceManagementService.getEntityManagerMap().get(clazz).read(id) == null) {
+                service.getIOHandler().printErrorMessage(errorMessage);
+                this.println("");
+            } else {
+                exit = true;
+            }
+        }
+
+        return id;
+    }
+
+    public Enum promptForEnumValue(Class clazz) {
+        boolean exit = false;
+        Enum value = null;
+        while (!exit) {
+            this.printEnumValues(clazz);
+            String tmp = this.askUserForInput("Please enter a value from the list above", true).toUpperCase();
+            try {
+                value = this.createEnumValueFromInput(tmp, clazz);
+                exit = true;
+            } catch (IllegalArgumentException e) {
+                this.printErrorMessage(e.getMessage() + " Please try again!");
+            }
+        }
+        return value;
+    }
+
+    private Enum createEnumValueFromInput(String input, Class clazz) throws IllegalArgumentException {
+        if (input == null || input.isEmpty())
+            throw new IllegalArgumentException("The entered input mustn't be null or empty!");
+        return Enum.valueOf(clazz, input);
+    }
+
+    public void printWarningMessage(String toPrint) {
+        this.println();
+        this.printColored("[WARNING]: ", ForegroundColor.YELLOW);
+        this.println(toPrint);
+        this.println();
+    }
+
 }

@@ -29,7 +29,11 @@ public class TableRenderer<T> {
         int maxWidth = column.getHeader().length();
 
         for (T data : toRender) {
-            String cellValue = column.getValue(data).toString();
+            String cellValue;
+            if (column.getValue(data) == null)
+                cellValue = "0";
+            else
+                cellValue = column.getValue(data).toString();
             maxWidth = Math.max(maxWidth, cellValue.length());
         }
 
@@ -74,7 +78,11 @@ public class TableRenderer<T> {
             StringBuilder rowBuilder = new StringBuilder("┃");
 
             for (int i = 0; i < columns.length; i++) {
-                String cellValue = columns[i].getValue(data).toString();
+                String cellValue;
+                if (columns[i].getValue(data) == null)
+                    cellValue = "0";
+                else
+                    cellValue = columns[i].getValue(data).toString();
                 int width = columnWidths[i] + 2;
                 rowBuilder.append(" ").append(cellValue).append(" ".repeat(width - cellValue.length() - 1)).append("┃");
             }

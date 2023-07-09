@@ -87,4 +87,13 @@ public interface IOHandler {
     void renderSponsorTable(List<Sponsor> sponsors);
 
     void renderResultTable(List<Result> results);
+
+    int getEntityIdFromUser(ReadEntity readEntityFunctionInterface,Class clazz, String prompt, String errorMessage, Service service);
+
+    /**
+     * Prints all values of an enumeration to the console.
+     */
+    <T extends Enum<T>> void printEnumValues(Class<T> enumClass);
+
+    Enum promptForEnumValue(Class clazz);
 }

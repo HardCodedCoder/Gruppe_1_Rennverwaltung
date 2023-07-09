@@ -9,7 +9,7 @@ import java.util.List;
 public class BaseEntityManager<T> {
     protected EntityManager entityManager;
 
-    private final Class<T> entityClass;
+    protected final Class<T> entityClass;
 
     public BaseEntityManager(EntityManager entityManager, Class<T> entityClass) {
         this.entityClass = entityClass;
@@ -39,6 +39,13 @@ public class BaseEntityManager<T> {
             throw new IllegalStateException("The entity manager is not open!");
     }
 
+    public T read(T instance) throws IllegalStateException {
+        if (this.entityManager.isOpen())
+            return this.entityManager.find(this.entityClass, instance);
+        else
+            throw new IllegalStateException("The entity manager is not open!");
+    }
+
     public List<T> readAll() {
         CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(this.entityClass);
@@ -48,7 +55,7 @@ public class BaseEntityManager<T> {
         return this.entityManager.createQuery(criteriaQuery).getResultList();
     }
 
-    public void update(T entity) {
+    public boolean update(T entity) {
         if (!this.entityManager.isOpen())
             throw new IllegalStateException("The entity manager is not open!");
 
@@ -56,15 +63,16 @@ public class BaseEntityManager<T> {
             this.entityManager.getTransaction().begin();
             this.entityManager.merge(entity);
             this.entityManager.getTransaction().commit();
+            return true;
         } catch (Exception e) {
             if (entityManager.getTransaction() != null)
                 entityManager.getTransaction().rollback();
             System.err.println("An error occurred while updating entity: " + entity.toString() + ".");
+            return false;
         }
-
     }
 
-    public void delete(T entity) throws IllegalStateException {
+    public boolean delete(T entity) throws IllegalStateException {
         if (!this.entityManager.isOpen())
             throw new IllegalStateException("The entity manager is not open!");
         try {
@@ -75,7 +83,10 @@ public class BaseEntityManager<T> {
             if (entityManager.getTransaction()!= null)
                 entityManager.getTransaction().rollback();
             System.err.println("An error occurred while deleting entity: " + entity.toString() + ".");
+            return false;
         }
+
+        return true;
     }
 
     public void close() {

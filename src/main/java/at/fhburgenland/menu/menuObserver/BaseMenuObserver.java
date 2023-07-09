@@ -56,4 +56,19 @@ public abstract class BaseMenuObserver implements MenuObserver {
         var teams = RaceManagementService.getEntityManagerMap().get(Team.class).readAll();
         this.service.getIOHandler().renderTeamTable(teams);
     }
+
+    protected void executeReadForDriver()  {
+        var drivers = RaceManagementService.getEntityManagerMap().get(Driver.class).readAll();
+        this.service.getIOHandler().renderDriverTable(drivers);
+    }
+
+    protected void executeReadForRace() {
+        var races = RaceManagementService.getEntityManagerMap().get(Race.class).readAll();
+        this.service.getIOHandler().renderRaceTable(races);
+    }
+
+    protected void executeReadForResult() {
+        var results = RaceManagementService.getEntityManagerMap().get(Result.class).readAll();
+        this.service.getIOHandler().renderResultTable(results);
+    }
 }
