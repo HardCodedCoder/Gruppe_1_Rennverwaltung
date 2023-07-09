@@ -84,16 +84,16 @@ INSERT INTO sponsor(name) values ('Nugget Inc.');
 INSERT INTO sponsor(name) values ('Eros Ramazzotti');
 INSERT INTO sponsor(name) values ('Bad Dragon');
 
-INSERT INTO team values(name, gruendungsjahr, sponsor_id) ('AMG Petronas',1997,1);
-INSERT INTO team values(name, gruendungsjahr, sponsor_id) ('Scuderia Ferrari',1996,2);
-INSERT INTO team values(name, gruendungsjahr, sponsor_id) ('Lada',1973,3);
+INSERT INTO team(name, gruendungsjahr, sponsor_id) values ('AMG Petronas',1997,1);
+INSERT INTO team(name, gruendungsjahr, sponsor_id) values ('Scuderia Ferrari',1996,2);
+INSERT INTO team(name, gruendungsjahr, sponsor_id) values ('Lada',1973,3);
 
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Mercedes','F1 W13 E Performance',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Reb Bull','RB18',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Ferrari','SF22',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Ferrari','SF22',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Alpine Tauri','A522',2022);
-INSERT INTO fahrzeug(marke, modell, baujahr) values (Alpine','AT03',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values ('Alpine','AT03',2022);
 
 INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Andreas','Graf','Österreich',1,1);
 INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Nugget','Meister','England',1,1);
