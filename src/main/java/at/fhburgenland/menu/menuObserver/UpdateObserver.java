@@ -33,6 +33,8 @@ public class UpdateObserver extends BaseMenuObserver{
 
     private void updateVehicle() {
         Vehicle vehicle = this.getHybernateManagedEntity(() -> this.executeReadForVehicle(), Vehicle.class);
+        if (vehicle == null)
+            return;
         Vehicle newData = this.createVehicleObject();
         vehicle.setBrand(newData.getBrand());
         vehicle.setModel(newData.getModel());
@@ -78,6 +80,8 @@ public class UpdateObserver extends BaseMenuObserver{
 
     private void updateRaceTrack() {
         RaceTrack raceTrack = this.getHybernateManagedEntity(() -> this.executeReadForRaceTrack(), RaceTrack.class);
+        if (raceTrack == null)
+            return;
         RaceTrack newData = this.createRaceTrackObject();
         raceTrack.setName(newData.getName());
         raceTrack.setState(newData.getState());
@@ -87,6 +91,8 @@ public class UpdateObserver extends BaseMenuObserver{
 
     private void updateRace() {
         Race race = this.getHybernateManagedEntity(() -> this.executeReadForRace(), Race.class);
+        if (race == null)
+            return;
         Race newData = this.createRaceObject();
         race.setRaceTrackId(newData.getRaceTrackId());
         race.setDate(newData.getDate());
@@ -96,6 +102,8 @@ public class UpdateObserver extends BaseMenuObserver{
 
     private void updateOutage() {
         Outage outage = this.getHybernateManagedEntity(() -> this.executeReadForOutage(), Outage.class);
+        if (outage == null)
+            return;
         Outage newData = this.createOutageObject();
         outage.setRaceId(newData.getRaceId());
         outage.setDriverId(newData.getDriverId());
@@ -105,6 +113,8 @@ public class UpdateObserver extends BaseMenuObserver{
 
     private void updateDriver() {
         Driver driver = this.getHybernateManagedEntity(() -> this.executeReadForDriver(), Driver.class);
+        if (driver == null)
+            return;
         Driver newData = this.createDriverObject();
         driver.setFirstName(newData.getFirstName());
         driver.setLastName(newData.getLastName());
