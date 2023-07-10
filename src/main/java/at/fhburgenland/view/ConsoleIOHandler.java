@@ -14,6 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @Slf4j
@@ -293,6 +296,26 @@ public class ConsoleIOHandler implements IOHandler {
         TableColumn<Outage> reasonColumn = new Column<>("AUSFALLSZENARIO", Outage::getReason);
         outageTableRenderer.renderTable(outages, driverId, raceId, reasonColumn);
         System.out.println();
+    }
+
+    @Override
+    public LocalDate getDateFromUser(String prompt) {
+        LocalDate date = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+
+        do
+        {
+            this.print(prompt + ": ");
+            String input = this.inputScanner.nextLine();
+
+            try {
+                date = LocalDate.parse(input, formatter);
+            } catch (DateTimeParseException e) {
+                this.printErrorMessage("Ungültiges Datumsformat. Versuchen Sie es bitte erneut!");
+            }
+        } while (date == null);
+
+        return date;
     }
 
     @Override

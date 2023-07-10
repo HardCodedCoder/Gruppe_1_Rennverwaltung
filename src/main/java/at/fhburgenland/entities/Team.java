@@ -11,12 +11,12 @@ import javax.persistence.*;
 @Entity(name = "Team")
 @Table(name = "team")
 @ToString
-public class Team {
+public class Team implements Comparable<Team> {
     /**
      * Holds the id of the team.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "team_id", updatable = false, nullable = false, unique = true)
     private int teamId;
 
@@ -35,6 +35,6 @@ public class Team {
     /**
      * Holds the sponsor ID
      */
-    @Column(name = "sponsor_id", nullable = false, updatable = false, insertable = false)
+    @Column(name = "sponsor_id", nullable = false, updatable = false)
     private int sponsorId;
 }

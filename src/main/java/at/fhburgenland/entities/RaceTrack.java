@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Entity(name = "Rennstrecke")
 @Table(name = "rennstrecke")
 @ToString
-public class RaceTrack {
+public class RaceTrack implements Comparable<RaceTrack> {
     /**
      * Holds the id of the racetrack
      */

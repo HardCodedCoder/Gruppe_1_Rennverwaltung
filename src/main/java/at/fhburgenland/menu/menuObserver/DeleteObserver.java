@@ -2,10 +2,9 @@ package at.fhburgenland.menu.menuObserver;
 
 import at.fhburgenland.RaceEntityManager;
 import at.fhburgenland.RaceManagementService;
-import at.fhburgenland.entities.Outage;
-import at.fhburgenland.entities.Result;
-import at.fhburgenland.entities.Vehicle;
+import at.fhburgenland.entities.*;
 import at.fhburgenland.enumerations.ForegroundColor;
+import at.fhburgenland.interfaces.ReadEntity;
 import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.enumerations.MenuPages;
 
@@ -36,23 +35,11 @@ public class DeleteObserver extends BaseMenuObserver{
     }
 
     private void deleteVehicle() {
-        this.executeReadForVehicle();
-        int toDelete = this.service.getIOHandler().getNumberFromUser("Bitte geben Sie die Id des Fahrzeuges ein, welches Sie löschen möchten", false).intValue();
-        var entityManager = RaceManagementService.getEntityManagerMap().get(Vehicle.class);
-        Vehicle vehicle = (Vehicle)entityManager.read(toDelete);
-        if (vehicle == null) {
-            this.service.getIOHandler().printErrorMessage("Das angegebene Fahrzeug mit der id: " + toDelete + " existiert nicht! Versuchen Sie den Vorgang nochmal");
-            return;
-        }
-        if (this.service.getIOHandler().askToContinue("Möchten Sie das Fahrzeug wirklich löschen? Der Vorgang kann nicht rückgängig gemacht werden! (y/n)"))
-            if (entityManager.delete(vehicle))
-                this.service.getIOHandler().printColoredLn("Fahrzeug wurde erfolgreich gelöscht.", ForegroundColor.GREEN);
-            else
-                this.service.getIOHandler().printErrorMessage("Das angegebene Fahrzeug mit der id: " + toDelete + " konnte nicht gelöscht werden");
+        this.deleteEntity(() -> this.executeReadForVehicle(), Vehicle.class);
     }
 
     private void deleteTeam() {
-
+       this.deleteEntity(() -> this.executeReadForTeam(), Team.class);
     }
 
     private void deleteSponsor() {
@@ -60,7 +47,7 @@ public class DeleteObserver extends BaseMenuObserver{
     }
 
     private void deleteRace() {
-
+        this.deleteEntity(() -> this.executeReadForRace(), Race.class);
     }
 
 
@@ -112,6 +99,22 @@ public class DeleteObserver extends BaseMenuObserver{
     }
 
     private void deleteDriver() {
+        deleteEntity(() -> this.executeReadForDriver(), Driver.class);
+    }
 
+    private <T> void  deleteEntity(ReadEntity readEntityFunction, Class clazz) {
+        readEntityFunction.readEntity();
+        int toDelete = this.service.getIOHandler().getNumberFromUser("Bitte geben Sie die Id die Sie löschen möchten", false).intValue();
+        var entityManager = RaceManagementService.getEntityManagerMap().get(clazz);
+        T entity = (T) entityManager.read(toDelete);
+        if (entity == null) {
+            this.service.getIOHandler().printErrorMessage("Die eingegebene id: " + toDelete + " existiert nicht! Versuchen Sie den Vorgang nochmal");
+            return;
+        }
+        if (this.service.getIOHandler().askToContinue("Möchten Sie den Eintrag wirklich löschen? Der Vorgang kann nicht rückgängig gemacht werden! (y/n)"))
+            if (entityManager.delete(entity))
+                this.service.getIOHandler().printColoredLn("Eintrag wurde erfolgreich gelöscht.", ForegroundColor.GREEN);
+            else
+                this.service.getIOHandler().printErrorMessage("Der Eintrag mit der id: " + toDelete + " konnte nicht gelöscht werden");
     }
 }

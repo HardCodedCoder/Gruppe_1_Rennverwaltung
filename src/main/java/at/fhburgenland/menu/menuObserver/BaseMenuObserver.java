@@ -1,7 +1,9 @@
 package at.fhburgenland.menu.menuObserver;
 
+import at.fhburgenland.RaceEntityManager;
 import at.fhburgenland.RaceManagementService;
 import at.fhburgenland.entities.*;
+import at.fhburgenland.enumerations.OutageReason;
 import at.fhburgenland.menu.MenuItem;
 import at.fhburgenland.BaseEntityManager;
 import at.fhburgenland.enumerations.MenuPages;
@@ -11,8 +13,9 @@ import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.interfaces.MenuObserver;
 import at.fhburgenland.interfaces.IOHandler;
 
-import javax.persistence.Persistence;
-import java.util.Map;
+import java.time.LocalDate;
+import java.util.Collections;
+
 
 @Slf4j
 public abstract class BaseMenuObserver implements MenuObserver {
@@ -59,6 +62,7 @@ public abstract class BaseMenuObserver implements MenuObserver {
 
     protected void executeReadForDriver()  {
         var drivers = RaceManagementService.getEntityManagerMap().get(Driver.class).readAll();
+        Collections.sort(drivers);
         this.service.getIOHandler().renderDriverTable(drivers);
     }
 

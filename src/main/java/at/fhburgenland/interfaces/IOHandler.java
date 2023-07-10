@@ -5,6 +5,7 @@ import at.fhburgenland.enumerations.BackgroundColor;
 import at.fhburgenland.enumerations.ForegroundColor;
 import at.fhburgenland.menu.MenuItem;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IOHandler {
@@ -87,6 +88,8 @@ public interface IOHandler {
     void renderSponsorTable(List<Sponsor> sponsors);
 
     void renderResultTable(List<Result> results);
+
+    LocalDate getDateFromUser(String prompt);
 
     int getEntityIdFromUser(ReadEntity readEntityFunctionInterface,Class clazz, String prompt, String errorMessage, Service service);
 
