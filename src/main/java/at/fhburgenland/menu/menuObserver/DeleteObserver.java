@@ -43,7 +43,7 @@ public class DeleteObserver extends BaseMenuObserver{
     }
 
     private void deleteSponsor() {
-
+        this.deleteEntity(() -> this.executeReadForSponsor(), Sponsor.class);
     }
 
     private void deleteRace() {
@@ -95,7 +95,7 @@ public class DeleteObserver extends BaseMenuObserver{
     }
 
     private void deleteRaceTrack() {
-
+        deleteEntity(() -> this.executeReadForRaceTrack(), RaceTrack.class);
     }
 
     private void deleteDriver() {

@@ -6,13 +6,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 @Getter
 @Setter
 @Entity(name = "Ausfall")
 @Table(name = "ausfall")
 @ToString
-public class Outage {
+public class Outage implements Comparable<Outage> {
     @Id
     @Column(name = "fahrer_id", updatable = false, nullable = false, unique = true)
     private int driverId;

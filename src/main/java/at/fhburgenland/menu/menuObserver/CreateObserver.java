@@ -43,11 +43,19 @@ public class CreateObserver extends BaseMenuObserver {
     }
 
     private void createTeam() {
-
+        var entityManager = RaceManagementService.getEntityManagerMap().get(Team.class);
+        if (entityManager.create(this.createTeamObject()))
+            this.service.getIOHandler().printColoredLn("Team erfolgreich erstellt.", ForegroundColor.GREEN);
+        else
+            this.service.getIOHandler().printErrorMessage("Team konnte aufgrund eines Fehlers nicht erstellt werden!");
     }
 
     private void createSponsor() {
-
+        var entityManager = RaceManagementService.getEntityManagerMap().get(Sponsor.class);
+        if (entityManager.create(this.createSponsorObject()))
+            this.service.getIOHandler().printColoredLn("Sponsor erfolgreich erstellt.", ForegroundColor.GREEN);
+        else
+            this.service.getIOHandler().printErrorMessage("Sponsor konnte aufgrund eines Fehlers nicht erstellt werden!");
     }
 
     private void createResult() {
@@ -70,7 +78,15 @@ public class CreateObserver extends BaseMenuObserver {
     }
 
     private void createRace() {
-
+        var entityManager = RaceManagementService.getEntityManagerMap().get(Driver.class);
+        if (entityManager.create(this.createRaceObject()))
+        {
+            this.service.getIOHandler().printColoredLn("Rennen erfolgreich erstellt.", ForegroundColor.GREEN);
+        }
+        else
+        {
+            this.service.getIOHandler().printErrorMessage("Rennen konnte nicht erstellt werden.");
+        }
     }
 
     private void createOutage() {

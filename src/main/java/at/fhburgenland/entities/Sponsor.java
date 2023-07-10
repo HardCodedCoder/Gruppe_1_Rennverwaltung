@@ -35,12 +35,10 @@ public class Sponsor implements Comparable<Sponsor>{
 
     /**
      * Initializes a new instance of the Sponsor class.
-     * @param sponsorId
-     * @param name
+     * @param name the name of the Sponsor
      */
-    public Sponsor(int sponsorId, String name)
+    public Sponsor(String name)
     {
-        this.sponsorId = sponsorId;
         this.name = name;
     }
 
