@@ -16,7 +16,7 @@ public class TerminateApplicationObserver extends BaseMenuObserver {
     @Override
     public void update(MenuPages fromMenu) {
         this.service.getIOHandler().println("Shutting down application!");
-        if (this.service.getIOHandler().askToContinue("Are you sure you want to exit?"))
+        if (this.service.getIOHandler().askToContinue("Are you sure you want to exit? (y/n)"))
             this.service.signalExit();
     }
 }

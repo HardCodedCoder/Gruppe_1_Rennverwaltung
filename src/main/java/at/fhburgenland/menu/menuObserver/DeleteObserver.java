@@ -52,6 +52,7 @@ public class DeleteObserver extends BaseMenuObserver{
 
 
     private void deleteOutage() {
+        this.executeReadForOutage();
         String userInput = this.service.getIOHandler().askUserForInput("Bitte geben Sie einen Ausfall " +
                 "in Form von <fahrer_id>, <rennen_id> ein: ", true);
         var split = userInput.split(",");
@@ -71,6 +72,7 @@ public class DeleteObserver extends BaseMenuObserver{
     }
 
     private void deleteResult() {
+        this.executeReadForResult();
        String userInput = this.service.getIOHandler().askUserForInput("Bitte geben Sie ein Ergebnis " +
                "in Form <rennen_id>, <erster_id>, <zweiter_id>, <dritter_id> (optional) ein: ", true);
        var split = userInput.split(",");

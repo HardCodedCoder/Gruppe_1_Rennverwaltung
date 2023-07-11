@@ -115,8 +115,8 @@ public abstract class BaseMenuObserver implements MenuObserver {
             sponsorId = this.service.getIOHandler().getNumberFromUser(
                     "Bitte geben Sie eine bestehende Sponsor-ID ein", true).intValue();
             if (RaceManagementService.getEntityManagerMap().get(Sponsor.class).read(sponsorId) == null) {
-                this.service.getIOHandler().printErrorMessage("Der angegebene Sponsor ist nicht vorhanden." +
-                        "Wählen Sie bitte eine der folgenden Sponsor-IDs aus:");
+                this.service.getIOHandler().printErrorMessage("Der angegebene Sponsor ist nicht vorhanden. " +
+                        "Wählen Sie bitte eine der folgenden Sponsor-IDs aus");
                 this.service.getIOHandler().println("");
             } else {
                 exit = true;
@@ -127,14 +127,14 @@ public abstract class BaseMenuObserver implements MenuObserver {
     }
 
     protected RaceTrack createRaceTrackObject() {
-        String name = this.service.getIOHandler().askUserForInput("Bitte gib einen Namen für Rennstrecke ein:", true);
-        String state = this.service.getIOHandler().askUserForInput("Bitte gib das Bundesland ein, wo sich die Rennstrecke befindet:", true);
-        String city = this.service.getIOHandler().askUserForInput("Bitte gib die Stadt ein, wo sich die Rennstrecke befindet:", true);
+        String name = this.service.getIOHandler().askUserForInput("Bitte gib einen Namen für Rennstrecke ein", true);
+        String state = this.service.getIOHandler().askUserForInput("Bitte gib das Bundesland ein, wo sich die Rennstrecke befindet", true);
+        String city = this.service.getIOHandler().askUserForInput("Bitte gib die Stadt ein, wo sich die Rennstrecke befindet", true);
         return new RaceTrack(name, state, city);
     }
 
     protected Sponsor createSponsorObject() {
-        return new Sponsor(this.service.getIOHandler().askUserForInput("Bitte gebe einen Namen für den Sponsor ein:", true));
+        return new Sponsor(this.service.getIOHandler().askUserForInput("Bitte gebe einen Namen für den Sponsor ein", true));
     }
 
     protected Result createResultObject() {
@@ -171,7 +171,7 @@ public abstract class BaseMenuObserver implements MenuObserver {
                 this.service.getIOHandler().printErrorMessage("Fahrer mit der Id " + secondId + " kann nicht erster UND zweiter sein!");
         } while (!exit);
 
-        boolean thirdExists = this.service.getIOHandler().askToContinue("Gibt es einen dritten Platz?");
+        boolean thirdExists = this.service.getIOHandler().askToContinue("Gibt es einen dritten Platz? (y/n)");
         int thirdId = 0;
         exit = false;
         if (thirdExists) {
@@ -202,18 +202,18 @@ public abstract class BaseMenuObserver implements MenuObserver {
     }
 
     protected Race createRaceObject() {
-        String name = this.service.getIOHandler().askUserForInput("Bitte gib einen Namen für das Rennen ein:", true);
-        LocalDate date = this.service.getIOHandler().getDateFromUser("Bitte gib ein Datum für das Rennen ein: ");
+        String name = this.service.getIOHandler().askUserForInput("Bitte gib einen Namen für das Rennen ein", true);
+        LocalDate date = this.service.getIOHandler().getDateFromUser("Bitte gib ein Datum für das Rennen ein");
         boolean exit = false;
         int raceTrackId = 0;
         while (!exit) {
+            this.executeReadForRaceTrack();
             raceTrackId = this.service.getIOHandler().getNumberFromUser(
-                    "Bitte geben Sie eine bestehende Rennstrecken-ID ein:", true).intValue();
+                    "Bitte geben Sie eine bestehende Rennstrecken-ID ein", true).intValue();
             if (RaceManagementService.getEntityManagerMap().get(RaceTrack.class).read(raceTrackId) == null) {
-                this.service.getIOHandler().printErrorMessage("Die eingegebene Rennstrecke ist nicht vorhanden." +
-                        "Wählen Sie bitte eine der folgenden Rennstrecken-IDs aus:");
+                this.service.getIOHandler().printErrorMessage("Die eingegebene Rennstrecke ist nicht vorhanden. " +
+                        "Wählen Sie bitte eine der folgenden Rennstrecken-IDs aus");
                 this.service.getIOHandler().println("");
-                this.executeReadForVehicle();
             } else {
                 exit = true;
             }
