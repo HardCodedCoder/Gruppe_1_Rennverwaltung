@@ -1,109 +1,5 @@
-Outage bearbeiten exception mit id
+Datenbank is lala
 
-Bitte geben Sie eine bestehende Rennstrecken-ID ein: 1
-
-Rennen erfolgreich erstellt.
-━━━━━━━━━━━━━━━━━━━
-Rennen verwalten
-━━━━━━━━━━━━━━━━━━━
-1 - Anzeigen
-2 - Bearbeiten
-3 - Anlegen
-4 - Löschen
-5 - Zurück
-━━━━━━━━━━━━━━━━━━━
-Please select a menuitem-number from the list above: 1
-
-Exception in thread "main" javax.persistence.PersistenceException: org.hibernate.PropertyAccessException: Null value was assigned to a property [class at.fhburgenland.entities.Race.raceTrackId] of primitive type setter of at.fhburgenland.entities.Race.raceTrackId
-	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:166)
-	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:193)
-	at org.hibernate.query.spi.AbstractQuery.list(AbstractQuery.java:1373)
-	at org.hibernate.query.Query.getResultList(Query.java:131)
-	at at.fhburgenland.BaseEntityManager.readAll(BaseEntityManager.java:55)
-	at at.fhburgenland.menu.menuObserver.BaseMenuObserver.executeReadForRace(BaseMenuObserver.java:71)
-	at at.fhburgenland.menu.menuObserver.ReadObserver.update(ReadObserver.java:21)
-	at at.fhburgenland.menu.MenuItem.notifyObservers(MenuItem.java:61)
-	at at.fhburgenland.menu.menuObserver.BaseMenuObserver.handleSubMenu(BaseMenuObserver.java:45)
-	at at.fhburgenland.menu.menuObserver.ShowRaceMenuObserver.update(ShowRaceMenuObserver.java:18)
-	at at.fhburgenland.menu.MenuItem.notifyObservers(MenuItem.java:61)
-	at at.fhburgenland.RaceManagementService.runService(RaceManagementService.java:118)
-	at at.fhburgenland.Main.main(Main.java:26)
-Caused by: org.hibernate.PropertyAccessException: Null value was assigned to a property [class at.fhburgenland.entities.Race.raceTrackId] of primitive type setter of at.fhburgenland.entities.Race.raceTrackId
-	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:58)
-	at org.hibernate.persister.entity.AbstractEntityPersister.lambda$setPropertyValues$11(AbstractEntityPersister.java:5376)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at org.hibernate.persister.entity.AbstractEntityPersister.visitFetchables(AbstractEntityPersister.java:6800)
-	at org.hibernate.persister.entity.AbstractEntityPersister.setPropertyValues(AbstractEntityPersister.java:5369)
-	at org.hibernate.sql.results.graph.entity.AbstractEntityInitializer.initializeEntity(AbstractEntityInitializer.java:631)
-	at org.hibernate.sql.results.graph.entity.AbstractEntityInitializer.initializeInstance(AbstractEntityInitializer.java:582)
-	at org.hibernate.sql.results.internal.StandardRowReader.coordinateInitializers(StandardRowReader.java:174)
-	at org.hibernate.sql.results.internal.StandardRowReader.readRow(StandardRowReader.java:86)
-	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:66)
-	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:24)
-	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:228)
-	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:146)
-	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.list(JdbcSelectExecutorStandardImpl.java:74)
-	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$0(ConcreteSqmSelectQueryPlan.java:80)
-	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:248)
-	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:191)
-	at org.hibernate.query.sqm.internal.QuerySqmImpl.doList(QuerySqmImpl.java:513)
-	at org.hibernate.query.spi.AbstractQuery.list(AbstractQuery.java:1364)
-	... 10 more
-Caused by: java.lang.IllegalArgumentException: Can not set int field at.fhburgenland.entities.Race.raceTrackId to null value
-	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:228)
-	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:232)
-	at java.base/jdk.internal.reflect.MethodHandleIntegerFieldAccessorImpl.set(MethodHandleIntegerFieldAccessorImpl.java:111)
-	at java.base/java.lang.reflect.Field.set(Field.java:820)
-	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:52)
-	... 28 more
-
-
-Exception in thread "main" javax.persistence.PersistenceException: org.hibernate.PropertyAccessException: Null value was assigned to a property [class at.fhburgenland.entities.Race.raceTrackId] of primitive type setter of at.fhburgenland.entities.Race.raceTrackId
-	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:166)
-	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:193)
-	at org.hibernate.query.spi.AbstractQuery.list(AbstractQuery.java:1373)
-	at org.hibernate.query.Query.getResultList(Query.java:131)
-	at at.fhburgenland.BaseEntityManager.readAll(BaseEntityManager.java:55)
-	at at.fhburgenland.menu.menuObserver.BaseMenuObserver.executeReadForRace(BaseMenuObserver.java:71)
-	at at.fhburgenland.menu.menuObserver.BaseMenuObserver.lambda$createResultObject$0(BaseMenuObserver.java:142)
-	at at.fhburgenland.view.ConsoleIOHandler.getEntityIdFromUser(ConsoleIOHandler.java:433)
-	at at.fhburgenland.menu.menuObserver.BaseMenuObserver.createResultObject(BaseMenuObserver.java:141)
-	at at.fhburgenland.menu.menuObserver.CreateObserver.createResult(CreateObserver.java:63)
-	at at.fhburgenland.menu.menuObserver.CreateObserver.update(CreateObserver.java:30)
-	at at.fhburgenland.menu.MenuItem.notifyObservers(MenuItem.java:61)
-	at at.fhburgenland.menu.menuObserver.BaseMenuObserver.handleSubMenu(BaseMenuObserver.java:45)
-	at at.fhburgenland.menu.menuObserver.ShowResultMenuObserver.update(ShowResultMenuObserver.java:18)
-	at at.fhburgenland.menu.MenuItem.notifyObservers(MenuItem.java:61)
-	at at.fhburgenland.RaceManagementService.runService(RaceManagementService.java:118)
-	at at.fhburgenland.Main.main(Main.java:26)
-Caused by: org.hibernate.PropertyAccessException: Null value was assigned to a property [class at.fhburgenland.entities.Race.raceTrackId] of primitive type setter of at.fhburgenland.entities.Race.raceTrackId
-	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:58)
-	at org.hibernate.persister.entity.AbstractEntityPersister.lambda$setPropertyValues$11(AbstractEntityPersister.java:5376)
-	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-	at org.hibernate.persister.entity.AbstractEntityPersister.visitFetchables(AbstractEntityPersister.java:6800)
-	at org.hibernate.persister.entity.AbstractEntityPersister.setPropertyValues(AbstractEntityPersister.java:5369)
-	at org.hibernate.sql.results.graph.entity.AbstractEntityInitializer.initializeEntity(AbstractEntityInitializer.java:631)
-	at org.hibernate.sql.results.graph.entity.AbstractEntityInitializer.initializeInstance(AbstractEntityInitializer.java:582)
-	at org.hibernate.sql.results.internal.StandardRowReader.coordinateInitializers(StandardRowReader.java:174)
-	at org.hibernate.sql.results.internal.StandardRowReader.readRow(StandardRowReader.java:86)
-	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:66)
-	at org.hibernate.sql.results.spi.ListResultsConsumer.consume(ListResultsConsumer.java:24)
-	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.doExecuteQuery(JdbcSelectExecutorStandardImpl.java:228)
-	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.executeQuery(JdbcSelectExecutorStandardImpl.java:146)
-	at org.hibernate.sql.exec.internal.JdbcSelectExecutorStandardImpl.list(JdbcSelectExecutorStandardImpl.java:74)
-	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.lambda$new$0(ConcreteSqmSelectQueryPlan.java:80)
-	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.withCacheableSqmInterpretation(ConcreteSqmSelectQueryPlan.java:248)
-	at org.hibernate.query.sqm.internal.ConcreteSqmSelectQueryPlan.performList(ConcreteSqmSelectQueryPlan.java:191)
-	at org.hibernate.query.sqm.internal.QuerySqmImpl.doList(QuerySqmImpl.java:513)
-	at org.hibernate.query.spi.AbstractQuery.list(AbstractQuery.java:1364)
-	... 14 more
-Caused by: java.lang.IllegalArgumentException: Can not set int field at.fhburgenland.entities.Race.raceTrackId to null value
-	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:228)
-	at java.base/jdk.internal.reflect.FieldAccessorImpl.throwSetIllegalArgumentException(FieldAccessorImpl.java:232)
-	at java.base/jdk.internal.reflect.MethodHandleIntegerFieldAccessorImpl.set(MethodHandleIntegerFieldAccessorImpl.java:111)
-	at java.base/java.lang.reflect.Field.set(Field.java:820)
-	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:52)
-	... 32 more
 
 
 
@@ -125,7 +21,7 @@ WHERE rennen.datum = '2021-07-04' -- Geben Sie hier das gewünschte Datum ein
 ORDER BY CASE WHEN ergebnis.erster = fahrer.fahrer_id THEN 1
               WHEN ergebnis.zweiter = fahrer.fahrer_id THEN 2
               WHEN ergebnis.dritter = fahrer.fahrer_id THEN 3
-         END;
+END;
 
 ...
 

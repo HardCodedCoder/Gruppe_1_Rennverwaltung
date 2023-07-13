@@ -1,4 +1,4 @@
-package at.fhburgenland.entities;
+package at.fhburgenland.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -8,79 +8,38 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity(name = "Fahrer")
-@Table(name = "fahrer")
+@Entity(name = "Sponsor")
+@Table(name = "sponsor")
 @ToString
-public class Driver implements Comparable<Driver> {
+public class Sponsor implements Comparable<Sponsor>{
     /**
-     * Holds the id of the driver
-     *
+     * Holds the id of the sponsor.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "fahrer_id", updatable = false, nullable = false)
-    private int driverId;
+    @Column(name = "sponsor_id", updatable = false, nullable = false, unique = true)
+    private int sponsorId;
 
     /**
-     * Holds the first name of the driver
+     * Holds the name of the sponsor.
      */
-    @Column(name = "vorname", nullable = false, length =50)
-    private String firstName;
+    @Column(name = "name", nullable = false, length = 20)
+    private String name;
 
     /**
-     * Holds the last name of the driver
+     * Initializes a new instance of the Sponsor class.
      */
-    @Column(name = "nachname", nullable = false, length =50)
-    private String lastName;
-
-    /**
-     * Holds the nationality of the driver
-     */
-    @Column(name = "nationalitaet", nullable = false, length =50)
-    private String nationality;
-
-    /**
-     * Holds the vehicle ID
-     */
-    @Column(name = "fahrzeug_id", nullable = false)
-    private int vehicleId;
-
-    /**
-     * Holds the team ID
-     */
-    @Column(name = "team_id", nullable = false)
-    private int teamId;
-
-    @OneToOne
-    @JoinColumn(name = "fahrzeug_id", insertable = false, updatable = false)
-    private Vehicle vehicle;
-
-    @OneToOne
-    @JoinColumn(name = "team_id", updatable = false, insertable = false)
-    private Team team;
-
-    /**
-     * Initializes a new instance of the Driver class.
-     */
-    public Driver() {
-
+    public Sponsor()
+    {
     }
 
     /**
-     * Initializes a new instance of the Driver class.
-     * @param firstName The first name of the driver.
-     * @param lastName The last name of the driver.
-     * @param nationality The nationality of the driver.
-     * @param vehicleId The vehicle ID.
-     * @param teamId The Team ID.
+     * Initializes a new instance of the Sponsor class.
+     * @param name the name of the Sponsor
      */
-    public Driver(String firstName, String lastName, String nationality, int vehicleId, int teamId)
+    public Sponsor(String name)
     {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.nationality = nationality;
-        this.vehicleId = vehicleId;
-        this.teamId = teamId;
+        this.name = name;
     }
 
     /**
@@ -116,7 +75,7 @@ public class Driver implements Comparable<Driver> {
      * inconsistent with equals."
      */
     @Override
-    public int compareTo(Driver o) {
-        return Integer.compare(this.driverId, o.driverId);
+    public int compareTo(Sponsor o) {
+        return Integer.compare(this.sponsorId, o.sponsorId);
     }
 }

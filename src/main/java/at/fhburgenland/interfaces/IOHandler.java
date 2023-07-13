@@ -1,6 +1,6 @@
 package at.fhburgenland.interfaces;
 
-import at.fhburgenland.entities.*;
+import at.fhburgenland.database.entities.*;
 import at.fhburgenland.enumerations.BackgroundColor;
 import at.fhburgenland.enumerations.ForegroundColor;
 import at.fhburgenland.menu.MenuItem;

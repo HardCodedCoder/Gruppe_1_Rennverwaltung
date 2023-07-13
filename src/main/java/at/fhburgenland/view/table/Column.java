@@ -21,7 +21,8 @@ public class Column<T, R> implements TableColumn<T> {
 
     @Override
     public Object getValue(T data) {
-        return valueExtractor.apply(data);
+        R value = valueExtractor.apply(data);
+        return value != null ? value.toString() : "null";
     }
 }
 

@@ -1,7 +1,7 @@
 package at.fhburgenland.menu.menuObserver;
 
 import at.fhburgenland.RaceManagementService;
-import at.fhburgenland.entities.*;
+import at.fhburgenland.database.entities.*;
 import at.fhburgenland.enumerations.ForegroundColor;
 import at.fhburgenland.interfaces.ReadEntity;
 import at.fhburgenland.interfaces.Service;
@@ -51,6 +51,8 @@ public class UpdateObserver extends BaseMenuObserver{
         if (team == null)
             return;
         Team newData = this.createTeamObject();
+        if (newData == null)
+            return;
         team.setName(newData.getName());
         team.setFoundingYear(newData.getFoundingYear());
         team.setSponsorId(newData.getSponsorId());
@@ -71,10 +73,22 @@ public class UpdateObserver extends BaseMenuObserver{
         if (result == null)
             return;
         Result newData = this.createResultObject();
+        if (newData == null)
+            return;
         result.setRaceId(newData.getRaceId());
         result.setFirstId(newData.getFirstId());
         result.setSecondId(newData.getSecondId());
         result.setThirdId(newData.getThirdId());
+        Driver firstDriver = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(result.getFirstId());
+        Driver secondDriver = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(result.getFirstId());
+        Race race = (Race)RaceManagementService.getEntityManagerMap().get(Race.class).read(result.getRaceId());
+        result.setFirstDriver(firstDriver);
+        result.setSecondDriver(secondDriver);
+        result.setRace(race);
+        if (result.getThirdId() != null) {
+            Driver thirdDriver = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(result.getThirdId());
+            result.setThirdDriver(thirdDriver);
+        }
         this.updateEntity(result, Result.class);
     }
 
@@ -105,9 +119,13 @@ public class UpdateObserver extends BaseMenuObserver{
         if (outage == null)
             return;
         Outage newData = this.createOutageObject();
-        outage.setRaceId(newData.getRaceId());
         outage.setDriverId(newData.getDriverId());
+        outage.setRaceId(newData.getRaceId());
         outage.setReason(newData.getReason());
+        Driver driverData = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(outage.getDriverId());
+        Race raceData = (Race)RaceManagementService.getEntityManagerMap().get(Race.class).read(outage.getRaceId());
+        outage.setDriver(driverData);
+        outage.setRace(raceData);
         this.updateEntity(outage, Outage.class);
     }
 
@@ -116,6 +134,8 @@ public class UpdateObserver extends BaseMenuObserver{
         if (driver == null)
             return;
         Driver newData = this.createDriverObject();
+        if (newData == null)
+            return;
         driver.setFirstName(newData.getFirstName());
         driver.setLastName(newData.getLastName());
         driver.setNationality(newData.getNationality());

@@ -1,8 +1,7 @@
 package at.fhburgenland.menu.menuObserver;
 
-import at.fhburgenland.RaceEntityManager;
 import at.fhburgenland.RaceManagementService;
-import at.fhburgenland.entities.*;
+import at.fhburgenland.database.entities.*;
 import at.fhburgenland.enumerations.OutageReason;
 import at.fhburgenland.menu.MenuItem;
 import at.fhburgenland.enumerations.MenuPages;
@@ -14,6 +13,7 @@ import at.fhburgenland.interfaces.IOHandler;
 
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.List;
 
 
 @Slf4j
@@ -123,7 +123,12 @@ public abstract class BaseMenuObserver implements MenuObserver {
             }
         }
 
-        return new Team(name, foundingYear, sponsorId);
+        if (this.sponsorIdAlreadyUsed(sponsorId)) {
+            this.service.getIOHandler().printErrorMessage("Der angegebene Sponsor betreut bereits ein Team! Vorgang wird abgebrochen...");
+            return null;
+        }
+        else
+            return new Team(name, foundingYear, sponsorId);
     }
 
     protected RaceTrack createRaceTrackObject() {
@@ -144,9 +149,9 @@ public abstract class BaseMenuObserver implements MenuObserver {
                 "Bitte geben Sie eine bestehende Rennen-ID ein",
                 "Das angegebene Rennen ist nicht vorhanden. Wählen Sie bitte eines der folgenden Rennen IDs aus",
                 this.service);
-        boolean exists = ((RaceEntityManager)RaceManagementService.getEntityManagerMap().get(Race.class)).doesResultExistForRace(raceId);
+        boolean exists = this.doesResultExistForRace(raceId);
         if (exists) {
-            this.service.getIOHandler().printErrorMessage("Für das Rennen mit der Id " + raceId + " gibt es bereits ein Ergebnis!");
+            this.service.getIOHandler().printErrorMessage("Für das Rennen mit der Id " + raceId + " gibt es bereits ein Ergebnis! Vorgang wird abgebrochen...");
             return null;
         }
 
@@ -184,14 +189,32 @@ public abstract class BaseMenuObserver implements MenuObserver {
                         this.service);
                 if (thirdId != firstId && thirdId != secondId)
                     exit = true;
-                this.service.getIOHandler().printErrorMessage("Fahrer mit der Id " + thirdId + " wurde bereits für ersten oder zweiten Platz angegeben!");
+                else
+                    this.service.getIOHandler().printErrorMessage("Fahrer mit der Id " + thirdId + " wurde bereits für ersten oder zweiten Platz angegeben!");
             } while (!exit);
         }
 
+        Driver first = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(firstId);
+        Driver second = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(secondId);
+        Race race = (Race)RaceManagementService.getEntityManagerMap().get(Race.class).read(raceId);
         if (!thirdExists)
-            return new Result(raceId, firstId, secondId);
+            return new Result(raceId, firstId, secondId, first, second, race);
         else
-            return new Result(raceId, firstId, secondId, thirdId);
+        {
+            Driver third = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(secondId);
+            return new Result(raceId, firstId, secondId, thirdId, first, second, third, race);
+        }
+
+    }
+
+    private boolean doesResultExistForRace(int raceId) {
+        List<Result> results = RaceManagementService.getEntityManagerMap().get(Result.class).readAll();
+        for (Result result : results) {
+            if (result.getRace().getRaceId() == raceId)
+                return true;
+        }
+
+        return false;
     }
 
     protected Vehicle createVehicleObject() {
@@ -236,7 +259,9 @@ public abstract class BaseMenuObserver implements MenuObserver {
                 "Das angegebene Rennen ist nicht vorhanden. Wählen Sie bitte eines der folgenden Rennen IDs aus",
                 this.service);
         String reason = ((OutageReason)this.service.getIOHandler().promptForEnumValue(OutageReason.class)).getReason();
-        return new Outage(driverId, raceId, reason);
+        Driver driverData = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(driverId);
+        Race raceData = (Race)RaceManagementService.getEntityManagerMap().get(Race.class).read(raceId);
+        return new Outage(driverId, raceId, reason,driverData, raceData);
     }
 
     protected Driver createDriverObject() {
@@ -249,6 +274,11 @@ public abstract class BaseMenuObserver implements MenuObserver {
                 "Bitte geben Sie eine bestehende Fahrzeug-ID ein",
                 "Das angegebene Fahrzeug ist nicht vorhanden. Wählen Sie bitte eines der folgenden Fahrzeug-IDs aus",
                 this.service);
+        if (vehicleIdAlreadyUsed(vehicleId))
+        {
+            this.service.getIOHandler().printErrorMessage("Das Fahrzeug ist bereits von einem Fahrer in Verwendung! Vorgang wird abgebrochen...");
+            return null;
+        }
         int teamId = this.service.getIOHandler().getEntityIdFromUser(
                 () -> this.executeReadForTeam(),
                 Team.class,
@@ -256,5 +286,25 @@ public abstract class BaseMenuObserver implements MenuObserver {
                 "Das angegebene Team ist nicht vorhanden. Wählen Sie bitte eine der folgenden Team-IDs aus",
                 this.service);
         return new Driver(forename, lastname, nationality, vehicleId, teamId);
+    }
+
+    private boolean vehicleIdAlreadyUsed(int vehicleId) {
+        List<Driver> drivers = RaceManagementService.getEntityManagerMap().get(Driver.class).readAll();
+        for (Driver driver : drivers) {
+            if (driver.getVehicle().getVehicleId() == vehicleId)
+                return true;
+        }
+
+        return false;
+    }
+
+    private boolean sponsorIdAlreadyUsed(int sponsorId) {
+        List<Team> sponsors = RaceManagementService.getEntityManagerMap().get(Team.class).readAll();
+        for (Team team : sponsors) {
+            if (team.getSponsor().getSponsorId() == sponsorId)
+                return true;
+        }
+
+        return false;
     }
 }

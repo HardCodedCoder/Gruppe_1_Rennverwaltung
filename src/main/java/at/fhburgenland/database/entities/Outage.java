@@ -1,4 +1,5 @@
-package at.fhburgenland.entities;
+package at.fhburgenland.database.entities;
+
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,55 +7,49 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Setter
 @Getter
-@Entity(name = "Fahrzeug")
-@Table(name = "fahrzeug")
+@Setter
+@Entity(name = "Ausfall")
+@Table(name = "ausfall")
 @ToString
-public class Vehicle implements Comparable<Vehicle> {
-    /**
-     * Holds the id of the vehicle
-     */
+public class Outage implements Comparable<Outage> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "fahrzeug_id", updatable = false, nullable = false, unique = true)
-    private int vehicleId;
+    @Column(name = "ausfall_id")
+    private int outageId;
 
-    /**
-     * Holds the brand of the vehicle
-     */
-    @Column(name = "marke", nullable = false, length = 50)
-    private String brand;
+    @Column(name = "fahrer_id", nullable = false)
+    private int driverId;
 
-    /**
-     * Holds the model of the vehicle
-     */
-    @Column(name = "modell", nullable = false, length = 50)
-    private String model;
+    @Column(name = "rennen_id", nullable = false)
+    private int raceId;
 
-    /**
-     * holds the year of construction of the vehicle
-     */
-    @Column(name = "baujahr", nullable = false)
-    private int constructionYear;
+    @Column(name = "ausfallszenario", nullable = false)
+    private String reason;
 
-    @OneToOne(mappedBy = "vehicle")
+    @ManyToOne
+    @JoinColumn(name = "rennen_id",  insertable = false, updatable = false)
+    private Race race;
+
+    @OneToOne
+    @JoinColumn(name = "fahrer_id",  insertable = false, updatable = false)
     private Driver driver;
 
-    public Vehicle() {
+    public Outage() {
 
     }
 
-    /**
-     * Initializes a new instance of the Vehicle class.
-     * @param vehicleBrand The brand of the vehicle.
-     * @param vehicleModel The model.
-     * @param constructionYear The year when the vehicle was constructed.
-     */
-    public Vehicle(String vehicleBrand, String vehicleModel, int constructionYear) {
-        this.brand = vehicleBrand;
-        this.model = vehicleModel;
-        this.constructionYear = constructionYear;
+    public Outage(int driverId, int raceId) {
+        this.driverId = driverId;
+        this.raceId = raceId;
+
+    }
+    public Outage(int driverId, int raceId, String reason, Driver driver, Race race) {
+        this.driverId = driverId;
+        this.raceId = raceId;
+        this.reason = reason;
+        this.driver = driver;
+        this.race = race;
     }
 
     /**
@@ -90,7 +85,7 @@ public class Vehicle implements Comparable<Vehicle> {
      * inconsistent with equals."
      */
     @Override
-    public int compareTo(Vehicle o) {
-        return Integer.compare(this.vehicleId, o.vehicleId);
+    public int compareTo(Outage o) {
+        return Integer.compare(this.outageId, o.outageId);
     }
 }

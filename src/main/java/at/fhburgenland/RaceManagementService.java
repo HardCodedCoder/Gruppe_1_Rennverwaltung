@@ -1,6 +1,7 @@
 package at.fhburgenland;
 
-import at.fhburgenland.entities.*;
+import at.fhburgenland.database.entitymanagers.BaseEntityManager;
+import at.fhburgenland.database.entities.*;
 import at.fhburgenland.interfaces.IOHandler;
 import at.fhburgenland.interfaces.Menu;
 import at.fhburgenland.interfaces.MenuPage;
@@ -59,8 +60,8 @@ public class RaceManagementService implements Service {
         return Map.of(
                 Driver.class, new BaseEntityManager<Driver>(
                         Persistence.createEntityManagerFactory("fahrer").createEntityManager(), Driver.class),
-                Race.class, new RaceEntityManager(
-                        Persistence.createEntityManagerFactory("rennen").createEntityManager()),
+                Race.class, new BaseEntityManager<Race>(
+                        Persistence.createEntityManagerFactory("rennen").createEntityManager(), Race.class),
                 Outage.class, new BaseEntityManager<Outage>(
                         Persistence.createEntityManagerFactory("ausfall").createEntityManager(), Outage.class),
                 RaceTrack.class, new BaseEntityManager<RaceTrack>(
@@ -100,7 +101,8 @@ public class RaceManagementService implements Service {
                 this.menuPageFactory.createMenuPage(MenuPages.RESULT),
                 this.menuPageFactory.createMenuPage(MenuPages.SPONSOR),
                 this.menuPageFactory.createMenuPage(MenuPages.TEAM),
-                this.menuPageFactory.createMenuPage(MenuPages.VEHICLE)
+                this.menuPageFactory.createMenuPage(MenuPages.VEHICLE),
+                this.menuPageFactory.createMenuPage(MenuPages.QUERY)
         );
         Menu menu = new ConsoleMenu(menuPages, MenuPages.MAIN.getLabel());
         return menu;

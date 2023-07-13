@@ -1,58 +1,61 @@
-package at.fhburgenland.entities;
+package at.fhburgenland.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
-@Entity(name = "Rennen")
-@Table(name = "rennen")
+@Entity(name = "Team")
+@Table(name = "team")
 @ToString
-public class Race implements Comparable<Race>{
+public class Team implements Comparable<Team> {
     /**
-     * Holds the id of the race
+     * Holds the id of the team.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rennen_id", updatable = false, nullable = false, unique = true)
-    private int raceId;
+    @Column(name = "team_id", updatable = false, nullable = false, unique = true)
+    private int teamId;
 
     /**
-     * Holds the name of the race.
+     * Holds the name of the team.
      */
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 20)
     private String name;
 
     /**
-     * Holds the date of the team.
+     * Holds the founding year of the team.
      */
-    @Column(name = "datum", nullable = false)
-    private LocalDate date;
+    @Column(name = "gruendungsjahr", nullable = false)
+    private int foundingYear;
 
     /**
-     * Holds the racetrack ID
+     * Holds the sponsor ID
      */
-    @Column(name = "rennstrecken_id", nullable = false, updatable = false, insertable = false)
-    private int raceTrackId;
+    @Column(name = "sponsor_id", nullable = false, updatable = false)
+    private int sponsorId;
 
-    public Race(){
+    @OneToOne
+    @JoinColumn(name = "sponsor_id", insertable = false, updatable = false)
+    private Sponsor sponsor;
+
+    public Team(){
 
     }
 
     /**
-     * Initializes the instance of the Race
-     * @param name the name of the Race
-     * @param date the date of the Race
-     * @param raceTrackId the racetrack id
+     * Initializes the instance of the Team
+     * @param name the name of the team
+     * @param foundingYear the founding year of the team
+     * @param sponsorId the sponsor ID
      */
-    public Race(String name, LocalDate date, int raceTrackId) {
+    public Team(String name, int foundingYear, int sponsorId) {
         this.name = name;
-        this.date = date;
-        this.raceTrackId = raceTrackId;
+        this.foundingYear = foundingYear;
+        this.sponsorId = sponsorId;
     }
 
     /**
@@ -88,7 +91,7 @@ public class Race implements Comparable<Race>{
      * inconsistent with equals."
      */
     @Override
-    public int compareTo(Race o) {
-        return Integer.compare(this.raceId, o.raceId);
+    public int compareTo(Team o) {
+        return Integer.compare(this.teamId, o.teamId);
     }
 }

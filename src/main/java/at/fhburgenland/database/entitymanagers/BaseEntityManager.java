@@ -1,9 +1,11 @@
-package at.fhburgenland;
+package at.fhburgenland.database.entitymanagers;
+
+import at.fhburgenland.database.entities.*;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.Date;
 import java.util.List;
 
 public class BaseEntityManager<T> {
@@ -57,7 +59,7 @@ public class BaseEntityManager<T> {
 
     public boolean update(T entity) {
         if (!this.entityManager.isOpen())
-            throw new IllegalStateException("The entity manager is not open!");
+            throw new IllegalStateException("Der Entität-Manager ist nicht verfügbar!");
 
         try {
             this.entityManager.getTransaction().begin();
@@ -67,7 +69,7 @@ public class BaseEntityManager<T> {
         } catch (Exception e) {
             if (entityManager.getTransaction() != null)
                 entityManager.getTransaction().rollback();
-            System.err.println("An error occurred while updating entity: " + entity.toString() + ".");
+            System.err.println("\nEin Fehler wurde beim bearbeiten der Entität: " + entity.toString() + " ausgelöst.");
             return false;
         }
     }
@@ -87,6 +89,36 @@ public class BaseEntityManager<T> {
         }
 
         return true;
+    }
+
+    public List<Object[]> readByDate(Date date) {
+        CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object[]> criteriaQuery = criteriaBuilder.createQuery(Object[].class);
+        Root<Race> raceRoot = criteriaQuery.from(Race.class);
+        Join<Race, Result> resultJoin = raceRoot.join("ergebnis");
+        Join<Result, Driver> driverJoin = resultJoin.join("fahrer");
+        Join<Driver, Team> teamJoin= driverJoin.join("team");
+        Join<Driver, Vehicle> vehicleJoin = driverJoin.join("fahrzeug");
+
+        Expression<Object> caseExpression = criteriaBuilder.selectCase()
+                .when(criteriaBuilder.equal(resultJoin.get("erster"), driverJoin.get("fahrerId")), 1)
+                .when(criteriaBuilder.equal(resultJoin.get("zweiter"), driverJoin.get("fahrerId")), 2)
+                .when(criteriaBuilder.equal(resultJoin.get("dritter"), driverJoin.get("fahrerId")), 3)
+                        .otherwise(0);
+
+        criteriaQuery.select(criteriaBuilder.array(
+                raceRoot.get("name"),
+                raceRoot.get("datum"),
+                driverJoin.get("vorname"),
+                driverJoin.get("nachname"),
+                teamJoin.get("name"),
+                vehicleJoin.get("marke"),
+                vehicleJoin.get("modell")
+        ))
+                .where(criteriaBuilder.equal(raceRoot.get("datum"), date))
+                .orderBy(criteriaBuilder.asc(caseExpression));
+
+        return this.entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     public void close() {

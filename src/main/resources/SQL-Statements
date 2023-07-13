@@ -61,21 +61,23 @@ CREATE TABLE rennen (
 );
 
 CREATE TABLE ergebnis (
+	ergebnis_id SERIAL,
 	rennen_id INT,
 	erster INT NOT NULL,
 	zweiter INT NOT NULL,
 	dritter INT,
-	PRIMARY KEY(rennen_id, erster, zweiter, dritter),
+	PRIMARY KEY(ergebnis_id),
 	FOREIGN KEY (erster) REFERENCES fahrer (fahrer_id),
 	FOREIGN KEY (zweiter) REFERENCES fahrer (fahrer_id),
 	FOREIGN KEY (dritter) REFERENCES fahrer (fahrer_id)
 );
 
 CREATE TABLE ausfall (
+	ausfall_id SERIAL,
 	fahrer_id INT NOT NULL,
 	rennen_id INT NOT NULL,
 	ausfallszenario VARCHAR(100) NOT NULL,
-	PRIMARY KEY (fahrer_id, Rennen_id),
+	PRIMARY KEY (ausfall_id),
 	FOREIGN KEY (fahrer_id) REFERENCES Fahrer(fahrer_id),
 	FOREIGN KEY (rennen_id) REFERENCES Rennen(rennen_id)
 );

@@ -1,4 +1,4 @@
-package at.fhburgenland.entities;
+package at.fhburgenland.database.entities;
 
 
 import lombok.Getter;
@@ -14,22 +14,37 @@ import javax.persistence.*;
 @ToString
 public class Result implements Comparable<Result> {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ergebnis_id", nullable = false, updatable = false)
+    private int resultId;
+
     @Column(name = "rennen_id")
     private int raceId;
 
-    @Id
-    @JoinColumn(name = "fahrer_id")
     @Column(name = "erster", nullable = false, updatable = false)
     private int firstId;
 
-    @Id
-    @JoinColumn(name = "fahrer_id")
     @Column(name = "zweiter", nullable = false, updatable = false)
     private int secondId;
 
-    @JoinColumn(name = "fahrer_id")
     @Column(name = "dritter", nullable = true, updatable = false)
     private Integer thirdId;
+
+    @OneToOne
+    @JoinColumn(name = "erster", referencedColumnName = "fahrer_id", insertable = false, updatable = false)
+    private Driver firstDriver;
+
+    @OneToOne
+    @JoinColumn(name = "zweiter", referencedColumnName = "fahrer_id", insertable = false, updatable = false)
+    private Driver secondDriver;
+
+    @OneToOne
+    @JoinColumn(name = "dritter", referencedColumnName = "fahrer_id", insertable = false, updatable = false)
+    private Driver thirdDriver;
+
+    @OneToOne
+    @JoinColumn(name = "rennen_id", insertable = false, updatable = false)
+    private Race race;
 
     /**
      * Initializes a new instance of the Result class.
@@ -44,11 +59,14 @@ public class Result implements Comparable<Result> {
      * @param firstId
      * @param secondId
      */
-    public Result(int raceId, int firstId, int secondId)
+    public Result(int raceId, int firstId, int secondId, Driver firstDriver, Driver secondDriver, Race race)
     {
         this.raceId = raceId;
         this.firstId = firstId;
         this.secondId = secondId;
+        this.firstDriver = firstDriver;
+        this.secondDriver = secondDriver;
+        this.race = race;
     }
 
     /**
@@ -58,12 +76,16 @@ public class Result implements Comparable<Result> {
      * @param secondId
      * @param thirdId
      */
-    public Result(int raceId, int firstId, int secondId, int thirdId)
+    public Result(int raceId, int firstId, int secondId, int thirdId,  Driver firstDriver, Driver secondDriver, Driver thirdDriver, Race race)
     {
         this.raceId = raceId;
         this.firstId = firstId;
         this.secondId = secondId;
         this.thirdId = thirdId;
+        this.firstDriver = firstDriver;
+        this.secondDriver = secondDriver;
+        this.thirdDriver = thirdDriver;
+        this.race = race;
     }
 
     /**

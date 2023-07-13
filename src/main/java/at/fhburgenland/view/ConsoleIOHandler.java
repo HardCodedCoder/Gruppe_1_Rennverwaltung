@@ -1,7 +1,7 @@
 package at.fhburgenland.view;
 
 import at.fhburgenland.RaceManagementService;
-import at.fhburgenland.entities.*;
+import at.fhburgenland.database.entities.*;
 import at.fhburgenland.enumerations.BackgroundColor;
 import at.fhburgenland.enumerations.ForegroundColor;
 import at.fhburgenland.interfaces.*;
@@ -291,10 +291,12 @@ public class ConsoleIOHandler implements IOHandler {
     public void renderOutageTable(List<Outage> outages) {
         System.out.println();
         TableRenderer<Outage> outageTableRenderer = new TableRenderer<>();
-        TableColumn<Outage> driverId = new Column<>("FAHRER ID", Outage::getDriverId);
-        TableColumn<Outage> raceId = new Column<>("RENNEN ID", Outage::getRaceId);
+        TableColumn<Outage> outageId = new Column<>("ID", Outage::getOutageId);
+        TableColumn<Outage> driverId = new Column<>("FAHRER ",
+                outage -> outage.getDriver().getFirstName() + " " + outage.getDriver().getLastName());
+        TableColumn<Outage> raceId = new Column<>("RENNEN", outage -> outage.getRace().getName());
         TableColumn<Outage> reasonColumn = new Column<>("AUSFALLSZENARIO", Outage::getReason);
-        outageTableRenderer.renderTable(outages, driverId, raceId, reasonColumn);
+        outageTableRenderer.renderTable(outages, outageId, driverId, raceId, reasonColumn);
         System.out.println();
     }
 
@@ -368,11 +370,19 @@ public class ConsoleIOHandler implements IOHandler {
     public void renderResultTable(List results) {
         System.out.println();
         TableRenderer<Result> resultTableRenderer = new TableRenderer<>();
-        TableColumn<Result> raceIdColumn = new Column<>("RENNEN_ID", Result::getRaceId);
-        TableColumn<Result> driverIdColumn = new Column<>("ERSTER", Result::getFirstId);
-        TableColumn<Result> secondDriverIdColumn = new Column<>("ZWEITER", Result::getSecondId);
-        TableColumn<Result> thirdDriverIdColumn = new Column<>("DRITTER", Result::getThirdId);
-        resultTableRenderer.renderTable(results, raceIdColumn, driverIdColumn, secondDriverIdColumn, thirdDriverIdColumn);
+        TableColumn<Result> resultIdColumn = new Column<>("RENNEN_ID", Result::getResultId);
+        TableColumn<Result> raceIdColumn = new Column<>("RENNEN", result -> result.getRace().getName());
+        TableColumn<Result> driverIdColumn = new Column<>("ERSTER PLATZ", result -> result.getFirstDriver().getFirstName() + " " + result.getFirstDriver().getLastName());
+        TableColumn<Result> secondDriverIdColumn = new Column<>("ZWEITER PLATZ", result -> result.getSecondDriver().getFirstName() + " " + result.getSecondDriver().getLastName());
+        TableColumn<Result> thirdDriverIdColumn = new Column<>("DRITTER PLATZ", result -> {
+            Driver thirdDriver = result.getThirdDriver();
+            if (thirdDriver != null) {
+                return thirdDriver.getFirstName() + " " + thirdDriver.getLastName();
+            } else {
+                return "Kein Dritter Platz";
+            }
+        });
+        resultTableRenderer.renderTable(results, resultIdColumn, raceIdColumn, driverIdColumn, secondDriverIdColumn, thirdDriverIdColumn);
         System.out.println();
     }
 

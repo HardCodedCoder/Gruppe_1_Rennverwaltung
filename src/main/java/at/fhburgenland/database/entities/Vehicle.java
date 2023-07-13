@@ -1,4 +1,4 @@
-package at.fhburgenland.entities;
+package at.fhburgenland.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -6,40 +6,55 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Getter
 @Setter
-@Entity(name = "Sponsor")
-@Table(name = "sponsor")
+@Getter
+@Entity(name = "Fahrzeug")
+@Table(name = "fahrzeug")
 @ToString
-public class Sponsor implements Comparable<Sponsor>{
+public class Vehicle implements Comparable<Vehicle> {
     /**
-     * Holds the id of the sponsor.
+     * Holds the id of the vehicle
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sponsor_id", updatable = false, nullable = false, unique = true)
-    private int sponsorId;
+    @Column(name = "fahrzeug_id", updatable = false, nullable = false, unique = true)
+    private int vehicleId;
 
     /**
-     * Holds the name of the sponsor.
+     * Holds the brand of the vehicle
      */
-    @Column(name = "name", nullable = false, length = 20)
-    private String name;
+    @Column(name = "marke", nullable = false, length = 50)
+    private String brand;
 
     /**
-     * Initializes a new instance of the Sponsor class.
+     * Holds the model of the vehicle
      */
-    public Sponsor()
-    {
+    @Column(name = "modell", nullable = false, length = 50)
+    private String model;
+
+    /**
+     * holds the year of construction of the vehicle
+     */
+    @Column(name = "baujahr", nullable = false)
+    private int constructionYear;
+
+    @OneToOne(mappedBy = "vehicle")
+    private Driver driver;
+
+    public Vehicle() {
+
     }
 
     /**
-     * Initializes a new instance of the Sponsor class.
-     * @param name the name of the Sponsor
+     * Initializes a new instance of the Vehicle class.
+     * @param vehicleBrand The brand of the vehicle.
+     * @param vehicleModel The model.
+     * @param constructionYear The year when the vehicle was constructed.
      */
-    public Sponsor(String name)
-    {
-        this.name = name;
+    public Vehicle(String vehicleBrand, String vehicleModel, int constructionYear) {
+        this.brand = vehicleBrand;
+        this.model = vehicleModel;
+        this.constructionYear = constructionYear;
     }
 
     /**
@@ -75,7 +90,7 @@ public class Sponsor implements Comparable<Sponsor>{
      * inconsistent with equals."
      */
     @Override
-    public int compareTo(Sponsor o) {
-        return Integer.compare(this.sponsorId, o.sponsorId);
+    public int compareTo(Vehicle o) {
+        return Integer.compare(this.vehicleId, o.vehicleId);
     }
 }

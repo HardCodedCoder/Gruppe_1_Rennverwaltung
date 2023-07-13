@@ -1,14 +1,10 @@
 package at.fhburgenland.menu.menuObserver;
 
-import at.fhburgenland.RaceEntityManager;
 import at.fhburgenland.RaceManagementService;
-import at.fhburgenland.entities.*;
+import at.fhburgenland.database.entities.*;
 import at.fhburgenland.enumerations.ForegroundColor;
-import at.fhburgenland.enumerations.OutageReason;
 import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.enumerations.MenuPages;
-
-import java.time.LocalDate;
 
 public class CreateObserver extends BaseMenuObserver {
     /**
@@ -44,7 +40,10 @@ public class CreateObserver extends BaseMenuObserver {
 
     private void createTeam() {
         var entityManager = RaceManagementService.getEntityManagerMap().get(Team.class);
-        if (entityManager.create(this.createTeamObject()))
+        Team team = this.createTeamObject();
+        if (team == null)
+            return;
+        if (entityManager.create(team))
             this.service.getIOHandler().printColoredLn("Team erfolgreich erstellt.", ForegroundColor.GREEN);
         else
             this.service.getIOHandler().printErrorMessage("Team konnte aufgrund eines Fehlers nicht erstellt werden!");
@@ -79,7 +78,10 @@ public class CreateObserver extends BaseMenuObserver {
 
     private void createRace() {
         var entityManager = RaceManagementService.getEntityManagerMap().get(Driver.class);
-        if (entityManager.create(this.createRaceObject()))
+        Race race = this.createRaceObject();
+        if (race == null)
+            return;
+        if (entityManager.create(race))
         {
             this.service.getIOHandler().printColoredLn("Rennen erfolgreich erstellt.", ForegroundColor.GREEN);
         }
@@ -103,7 +105,10 @@ public class CreateObserver extends BaseMenuObserver {
 
     private void createDriver() {
         var entityManager = RaceManagementService.getEntityManagerMap().get(Driver.class);
-        if (entityManager.create(this.createDriverObject()))
+        Driver driver = this.createDriverObject();
+        if (driver == null)
+            return;
+        if (entityManager.create(driver))
         {
             this.service.getIOHandler().printColoredLn("Fahrer erfolgreich erstellt.", ForegroundColor.GREEN);
         }

@@ -1,6 +1,7 @@
 package at.fhburgenland;
 
 import at.fhburgenland.enumerations.CRUD;
+import at.fhburgenland.interfaces.Menu;
 import at.fhburgenland.interfaces.MenuPage;
 import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.menu.MenuItem;
@@ -28,6 +29,8 @@ public class ConcreteMenuPageFactory implements MenuPageFactory {
     private final List<MenuItem> teamMenuItems;
     private final List<MenuItem> vehicleMenuItems;
 
+    private final List<MenuItem> queryMenuItems;
+
     private final CreateObserver createObserver;
 
     private final UpdateObserver updateObserver;
@@ -54,6 +57,10 @@ public class ConcreteMenuPageFactory implements MenuPageFactory {
         this.sponsorMenuItems = this.createMenuItems(MenuPages.SPONSOR);
         this.teamMenuItems =  this.createMenuItems(MenuPages.TEAM);
         this.vehicleMenuItems = this.createMenuItems(MenuPages.VEHICLE);
+        this.queryMenuItems = List.of(
+                new MenuItem("Ausgabe Rennen anhand Datum", 1, new ExecuteQueryObserver(this.hostingService), MenuPages.QUERY),
+                new MenuItem("Zurück", 2, this.returnToPreviousPageObserver, MenuPages.QUERY)
+        );
     }
 
     private List<MenuItem> createMenuItems(MenuPages menuPage) {
@@ -76,7 +83,7 @@ public class ConcreteMenuPageFactory implements MenuPageFactory {
                 new MenuItem(MenuPages.SPONSOR.getLabel(), 6, new ShowSponsorMenuObserver(this.hostingService), MenuPages.MAIN),
                 new MenuItem(MenuPages.TEAM.getLabel(), 7, new ShowTeamMenuObserver(this.hostingService), MenuPages.MAIN),
                 new MenuItem(MenuPages.VEHICLE.getLabel(), 8, new ShowVehicleMenuObserver(this.hostingService), MenuPages.MAIN),
-                new MenuItem(MenuPages.QUERY.getLabel(), 9, new ExecuteQueryObserver(this.hostingService), MenuPages.MAIN),
+                new MenuItem(MenuPages.QUERY.getLabel(), 9, new ShowQueryMenuObserver(this.hostingService), MenuPages.MAIN),
                 new MenuItem(MenuPages.EXIT.getLabel(), 10, new TerminateApplicationObserver(this.hostingService), MenuPages.MAIN)
         );
     }
@@ -92,6 +99,7 @@ public class ConcreteMenuPageFactory implements MenuPageFactory {
             case SPONSOR -> new ConsolePage(sponsorMenuItems, MenuPages.SPONSOR);
             case TEAM -> new ConsolePage(teamMenuItems, MenuPages.TEAM);
             case VEHICLE -> new ConsolePage(vehicleMenuItems, MenuPages.VEHICLE);
+            case QUERY -> new ConsolePage(this.queryMenuItems, MenuPages.QUERY);
             default -> throw new IllegalStateException("Unknown menu page type: " + menuPageToCreate);
         };
     }

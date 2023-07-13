@@ -1,4 +1,4 @@
-package at.fhburgenland.entities;
+package at.fhburgenland.database.entities;
 
 import lombok.Getter;
 import lombok.Setter;

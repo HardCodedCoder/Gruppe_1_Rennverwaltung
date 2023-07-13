@@ -1,14 +1,11 @@
 package at.fhburgenland.menu.menuObserver;
 
-import at.fhburgenland.RaceEntityManager;
 import at.fhburgenland.RaceManagementService;
-import at.fhburgenland.entities.*;
+import at.fhburgenland.database.entities.*;
 import at.fhburgenland.enumerations.ForegroundColor;
 import at.fhburgenland.interfaces.ReadEntity;
 import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.enumerations.MenuPages;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 public class DeleteObserver extends BaseMenuObserver{
     /**
@@ -72,28 +69,7 @@ public class DeleteObserver extends BaseMenuObserver{
     }
 
     private void deleteResult() {
-        this.executeReadForResult();
-       String userInput = this.service.getIOHandler().askUserForInput("Bitte geben Sie ein Ergebnis " +
-               "in Form <rennen_id>, <erster_id>, <zweiter_id>, <dritter_id> (optional) ein: ", true);
-       var split = userInput.split(",");
-       if (!(split.length >= 3 && split.length <= 4)) {
-           this.service.getIOHandler().printErrorMessage("Bitte geben Sie ein Ergebnis im Format " +
-                   "<rennen_id>, <erster_id>, <zweiter_id>, <dritter_id> (optional) ");
-           return;
-       }
-       int rennenId = Integer.parseInt(split[0]);
-       int firstId = Integer.parseInt(split[1]);
-       int secondId = Integer.parseInt(split[2]);
-       Integer thirdId = null;
-       if (split.length == 4) {
-           thirdId = Integer.parseInt(split[3]);
-       }
-       Result unmanagedResult = new Result(rennenId, firstId, secondId, thirdId);
-       Result managedResult = (Result) RaceManagementService.getEntityManagerMap().get(Result.class).read(unmanagedResult);
-       if (RaceManagementService.getEntityManagerMap().get(Result.class).delete(managedResult))
-           this.service.getIOHandler().printColoredLn("Ergebnis wurde erfolgreich gelöscht.", ForegroundColor.GREEN);
-       else
-           this.service.getIOHandler().printErrorMessage("Das angegebene Ergebnis konnte nicht gelöscht werden");
+        deleteEntity(() -> this.executeReadForResult(), RaceTrack.class);
     }
 
     private void deleteRaceTrack() {
