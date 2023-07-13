@@ -93,16 +93,16 @@ INSERT INTO team(name, gruendungsjahr, sponsor_id) values ('Lada',1973,3);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Mercedes','F1 W13 E Performance',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Reb Bull','RB18',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Ferrari','SF22',2022);
-INSERT INTO fahrzeug(marke, modell, baujahr) values ('Ferrari','SF22',2022);
+INSERT INTO fahrzeug(marke, modell, baujahr) values ('Ferrari','SF23',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Alpine Tauri','A522',2022);
 INSERT INTO fahrzeug(marke, modell, baujahr) values ('Alpine','AT03',2022);
 
 INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Andreas','Graf','Österreich',1,1);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Nugget','Meister','England',1,1);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Akira','Blacky','Italien',2,2);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Ludmilla','Steinschreck','Taiwan',3,2);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Martin','Dorak','Uganda',4,3);
-INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Hassan','Sajid Naseer','Schweden',5,3);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Nugget','Meister','England',2,1);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Akira','Blacky','Italien',3,2);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Ludmilla','Steinschreck','Taiwan',4,2);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Martin','Dorak','Uganda',5,3);
+INSERT INTO fahrer(vorname, nachname, nationalitaet, fahrzeug_id, team_id) values ('Hassan','Sajid Naseer','Schweden',6,3);
 
 INSERT INTO rennstrecke(name, bundesland, stadt) values ('Red Bull Ring','Steiermark','Spielberg');
 INSERT INTO rennstrecke(name, bundesland, stadt) values ('Wachau Ring','Niederösterreich','Melk');
