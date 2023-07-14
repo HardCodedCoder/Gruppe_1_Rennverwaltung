@@ -4,6 +4,7 @@ import at.fhburgenland.database.entities.*;
 import at.fhburgenland.enumerations.BackgroundColor;
 import at.fhburgenland.enumerations.ForegroundColor;
 import at.fhburgenland.menu.MenuItem;
+import at.fhburgenland.utility.QueryResult;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -99,4 +100,6 @@ public interface IOHandler {
     <T extends Enum<T>> void printEnumValues(Class<T> enumClass);
 
     Enum promptForEnumValue(Class clazz);
+
+    void renderQueryResults(List<QueryResult> queryResults);
 }

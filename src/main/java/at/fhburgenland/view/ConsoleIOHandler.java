@@ -6,6 +6,7 @@ import at.fhburgenland.enumerations.BackgroundColor;
 import at.fhburgenland.enumerations.ForegroundColor;
 import at.fhburgenland.interfaces.*;
 import at.fhburgenland.menu.MenuItem;
+import at.fhburgenland.utility.QueryResult;
 import at.fhburgenland.utility.Utility;
 import at.fhburgenland.validators.MenuItemInputValidator;
 import at.fhburgenland.view.table.Column;
@@ -467,6 +468,21 @@ public class ConsoleIOHandler implements IOHandler {
             }
         }
         return value;
+    }
+
+    @Override
+    public void renderQueryResults(List<QueryResult> queryResults) {
+        System.out.println();
+        TableRenderer<QueryResult> resultTableRenderer = new TableRenderer<>();
+        TableColumn<QueryResult> resultIdColumn = new Column<>("NAME DES RENNENS", QueryResult::raceName);
+        TableColumn<QueryResult> dateColumn = new Column<>("DATUM", QueryResult::raceDate);
+        TableColumn<QueryResult> driverFirstNameColumn = new Column<>("Vorname", QueryResult::driverFirstName);
+        TableColumn<QueryResult> driverLastNameColumn = new Column<>("Nachname", QueryResult::driverLastName);
+        TableColumn<QueryResult> teamNameColumn = new Column<>("TEAM", QueryResult::teamName);
+        TableColumn<QueryResult> vehicleBrandColumn = new Column<>("MARKE", QueryResult::vehicleBrand);
+        TableColumn<QueryResult> vehicleModelColumn = new Column<>("MODELL", QueryResult::vehicleModel);
+        resultTableRenderer.renderTable(queryResults, resultIdColumn, dateColumn, driverFirstNameColumn, driverLastNameColumn,
+                teamNameColumn, vehicleBrandColumn, vehicleModelColumn);
     }
 
     private Enum createEnumValueFromInput(String input, Class clazz) throws IllegalArgumentException {

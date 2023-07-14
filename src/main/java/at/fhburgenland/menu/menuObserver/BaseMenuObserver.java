@@ -74,7 +74,7 @@ public abstract class BaseMenuObserver implements MenuObserver {
     }
 
     protected void executeReadForResult() {
-        var results = RaceManagementService.getEntityManagerMap().get(Result.class).readAll();
+        List<Result> results = RaceManagementService.getEntityManagerMap().get(Result.class).readAll();
         Collections.sort(results);
         this.service.getIOHandler().renderResultTable(results);
     }
@@ -201,7 +201,7 @@ public abstract class BaseMenuObserver implements MenuObserver {
             return new Result(raceId, firstId, secondId, first, second, race);
         else
         {
-            Driver third = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(secondId);
+            Driver third = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(thirdId);
             return new Result(raceId, firstId, secondId, thirdId, first, second, third, race);
         }
 
@@ -220,7 +220,15 @@ public abstract class BaseMenuObserver implements MenuObserver {
     protected Vehicle createVehicleObject() {
         String vehicleBrand = this.service.getIOHandler().askUserForInput("Bitte gib eine Fahrzeugmarke ein", true);
         String vehicleModel = this.service.getIOHandler().askUserForInput("Bitte gib eine Fahrzeugmodell ein", true);
-        int creationYear = this.service.getIOHandler().getNumberFromUser("Bitte gib das Baujahr ein",false).intValue();
+        boolean exit = false;
+        int creationYear = 0;
+        do {
+            creationYear = this.service.getIOHandler().getNumberFromUser("Bitte gib das Baujahr ein", false).intValue();
+            if (creationYear >= 1950)
+                exit = true;
+            else
+                this.service.getIOHandler().printErrorMessage("Das Baujahr muss nach größer gleich 1950 sein!");
+        } while (!exit);
         return new Vehicle(vehicleBrand, vehicleModel, creationYear);
     }
 

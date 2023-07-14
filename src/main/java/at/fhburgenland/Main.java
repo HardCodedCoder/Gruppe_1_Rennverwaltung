@@ -3,9 +3,12 @@ package at.fhburgenland;
 import at.fhburgenland.interfaces.IOHandler;
 import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.exceptions.InstantiateServiceException;
+import at.fhburgenland.utility.QueryResult;
 import at.fhburgenland.view.ConsoleIOHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
+
+import java.time.LocalDate;
 
 @Slf4j
 public class Main {

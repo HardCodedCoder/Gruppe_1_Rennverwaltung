@@ -49,23 +49,7 @@ public class DeleteObserver extends BaseMenuObserver{
 
 
     private void deleteOutage() {
-        this.executeReadForOutage();
-        String userInput = this.service.getIOHandler().askUserForInput("Bitte geben Sie einen Ausfall " +
-                "in Form von <fahrer_id>, <rennen_id> ein: ", true);
-        var split = userInput.split(",");
-        if (!(split.length == 2)) {
-            this.service.getIOHandler().printErrorMessage("Bitte geben Sie einen Ausfall " +
-                    "in Form von <fahrer_id>, <rennen_id> ein: ");
-            return;
-        }
-        int driverId = Integer.parseInt(split[0]);
-        int raceId = Integer.parseInt(split[1]);
-        Outage unmanagedOutage = new Outage(driverId, raceId);
-        Outage managedOutage = (Outage) RaceManagementService.getEntityManagerMap().get(Outage.class).read(unmanagedOutage);
-        if (RaceManagementService.getEntityManagerMap().get(Outage.class).delete(managedOutage))
-            this.service.getIOHandler().printColoredLn("Ausfall wurde erfolgreich gelöscht.", ForegroundColor.GREEN);
-        else
-            this.service.getIOHandler().printErrorMessage("Der angegebene Ausfall konnte nicht gelöscht werden");
+        this.deleteEntity(() -> this.executeReadForOutage(), Outage.class);
     }
 
     private void deleteResult() {

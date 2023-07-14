@@ -79,15 +79,12 @@ public class UpdateObserver extends BaseMenuObserver{
         result.setFirstId(newData.getFirstId());
         result.setSecondId(newData.getSecondId());
         result.setThirdId(newData.getThirdId());
-        Driver firstDriver = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(result.getFirstId());
-        Driver secondDriver = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(result.getFirstId());
         Race race = (Race)RaceManagementService.getEntityManagerMap().get(Race.class).read(result.getRaceId());
-        result.setFirstDriver(firstDriver);
-        result.setSecondDriver(secondDriver);
+        result.setFirstDriver(newData.getFirstDriver());
+        result.setSecondDriver(newData.getSecondDriver());
         result.setRace(race);
         if (result.getThirdId() != null) {
-            Driver thirdDriver = (Driver)RaceManagementService.getEntityManagerMap().get(Driver.class).read(result.getThirdId());
-            result.setThirdDriver(thirdDriver);
+            result.setThirdDriver(newData.getThirdDriver());
         }
         this.updateEntity(result, Result.class);
     }

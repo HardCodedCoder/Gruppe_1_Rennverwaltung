@@ -36,8 +36,8 @@ public class Race implements Comparable<Race>{
     /**
      * Holds the racetrack ID
      */
-    @Column(name = "rennstrecken_id", nullable = false, insertable = false, updatable = false)
-    private Integer raceTrackId;
+    @Column(name = "rennstrecken_id", nullable = false)
+    private int raceTrackId;
 
     public Race(){
 

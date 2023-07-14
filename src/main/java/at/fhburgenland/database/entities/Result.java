@@ -21,13 +21,13 @@ public class Result implements Comparable<Result> {
     @Column(name = "rennen_id")
     private int raceId;
 
-    @Column(name = "erster", nullable = false, updatable = false)
+    @Column(name = "erster", nullable = false)
     private int firstId;
 
-    @Column(name = "zweiter", nullable = false, updatable = false)
+    @Column(name = "zweiter", nullable = false)
     private int secondId;
 
-    @Column(name = "dritter", nullable = true, updatable = false)
+    @Column(name = "dritter")
     private Integer thirdId;
 
     @OneToOne
@@ -122,6 +122,6 @@ public class Result implements Comparable<Result> {
      */
     @Override
     public int compareTo(Result o) {
-        return Integer.compare(this.raceId, o.raceId);
+        return Integer.compare(this.resultId, o.resultId);
     }
 }

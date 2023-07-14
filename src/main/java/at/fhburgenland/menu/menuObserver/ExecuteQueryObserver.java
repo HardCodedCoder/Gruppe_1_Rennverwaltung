@@ -1,12 +1,17 @@
 package at.fhburgenland.menu.menuObserver;
 
 import at.fhburgenland.RaceManagementService;
+import at.fhburgenland.database.entities.Driver;
 import at.fhburgenland.database.entities.Race;
+import at.fhburgenland.database.entities.Result;
 import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.enumerations.MenuPages;
+import at.fhburgenland.utility.QueryResult;
 import ch.qos.logback.core.encoder.EchoEncoder;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,25 +27,52 @@ public class ExecuteQueryObserver extends BaseMenuObserver{
 
     @Override
     public void update(MenuPages fromMenu) {
-        String dateString = "2021-07-04";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date desiredDate = null;
-        try {
-            desiredDate = dateFormat.parse(dateString);
-        } catch (Exception e) {
-            System.out.println("basodlnahs ldfnjasöplojdasd");
-        }
+            this.executeReadForRace();
+            var date = this.service.getIOHandler().getDateFromUser("Bitte geben Sie das Datum in Form von <dd.mm.yyyy> des Rennen ein, das Sie abfragen möchten: ");
+            List<Result> results = RaceManagementService.getEntityManagerMap().get(Result.class).readAll();
+            List<QueryResult> queryResults = new ArrayList<>();
+            for (Result result : results) {
+                if (result.getRace().getDate().compareTo(date) == 0) {
+                    String raceName = result.getRace().getName();
 
-        List<Object[]> results = RaceManagementService.getEntityManagerMap().get(Race.class).readByDate(desiredDate);
-        for (Object[] result : results) {
-            String rennenName = (String) result[0];
-            Date rennenDatum = (Date) result[1];
-            String fahrerVorname = (String) result[2];
-            String fahrerNachname = (String) result[3];
-            String teamName = (String) result[4];
-            String fahrzeugMarke = (String) result[5];
-            String fahrzeugModell = (String) result[6];
+                    QueryResult first = new QueryResult(
+                            raceName,
+                            date,
+                            result.getFirstDriver().getFirstName(),
+                            result.getFirstDriver().getLastName(),
+                            result.getFirstDriver().getTeam().getName(),
+                            result.getFirstDriver().getVehicle().getBrand(),
+                            result.getFirstDriver().getVehicle().getModel()
+                    );
+                    queryResults.add(first);
 
+                    QueryResult second = new QueryResult(
+                            raceName,
+                            date,
+                            result.getSecondDriver().getFirstName(),
+                            result.getSecondDriver().getLastName(),
+                            result.getSecondDriver().getTeam().getName(),
+                            result.getSecondDriver().getVehicle().getBrand(),
+                            result.getSecondDriver().getVehicle().getModel()
+                    );
+                    queryResults.add(second);
+
+                    if (result.getThirdDriver()!= null) {
+                        QueryResult third = new QueryResult(
+                                raceName,
+                                date,
+                                result.getThirdDriver().getFirstName(),
+                                result.getThirdDriver().getLastName(),
+                                result.getThirdDriver().getTeam().getName(),
+                                result.getThirdDriver().getVehicle().getBrand(),
+                                result.getThirdDriver().getVehicle().getModel()
+                        );
+                        queryResults.add(third);
+                    }
+                }
+            }
+
+            this.service.getIOHandler().renderQueryResults(queryResults);
         }
     }
-}
+
