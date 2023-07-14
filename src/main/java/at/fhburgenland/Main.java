@@ -5,6 +5,7 @@ import at.fhburgenland.interfaces.Service;
 import at.fhburgenland.exceptions.InstantiateServiceException;
 import at.fhburgenland.view.ConsoleIOHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Session;
 
 @Slf4j
 public class Main {

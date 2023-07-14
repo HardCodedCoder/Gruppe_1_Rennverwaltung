@@ -226,7 +226,7 @@ public abstract class BaseMenuObserver implements MenuObserver {
 
     protected Race createRaceObject() {
         String name = this.service.getIOHandler().askUserForInput("Bitte gib einen Namen für das Rennen ein", true);
-        LocalDate date = this.service.getIOHandler().getDateFromUser("Bitte gib ein Datum für das Rennen ein");
+        LocalDate date = this.service.getIOHandler().getDateFromUser("Bitte gib ein Datum in Form von <dd.mm.yyyy> für das Rennen ein");
         boolean exit = false;
         int raceTrackId = 0;
         while (!exit) {

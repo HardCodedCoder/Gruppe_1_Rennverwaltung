@@ -1,8 +1,11 @@
 Datenbank is lala
+(Session session = HibernateUtil.getSessionFactory().openSession())
 
-
-
-
+Delete Id eingeben
+Datumsformat eingeben
+Rennen- rennstrecken id is null obwohl eingegeben beim bearbeiten gehts aber (bei create des races ab da is racetrack id auf einmal null)
+ergebnis bearbeiten geht nicht
+Baujahr validieren
 
 1; Crud Funktionen
    1.1; Welche tabelle
