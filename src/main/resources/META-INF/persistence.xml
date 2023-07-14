@@ -7,121 +7,121 @@
 
     <persistence-unit name="fahrer" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.Driver</class>
+        <class>at.fhburgenland.database.entities.Driver</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
     <persistence-unit name="rennen" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.Race</class>
+        <class>at.fhburgenland.database.entities.Race</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
     <persistence-unit name="ausfall" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.Outage</class>
+        <class>at.fhburgenland.database.entities.Outage</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
     <persistence-unit name="rennstrecke" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.RaceTrack</class>
+        <class>at.fhburgenland.database.entities.RaceTrack</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
     <persistence-unit name="ergebnis" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.Result</class>
+        <class>at.fhburgenland.database.entities.Result</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
     <persistence-unit name="sponsor" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.Sponsor</class>
+        <class>at.fhburgenland.database.entities.Sponsor</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
     <persistence-unit name="team" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.Team</class>
+        <class>at.fhburgenland.database.entities.Team</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
     <persistence-unit name="fahrzeug" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <class>at.fhburgenland.entities.Vehicle</class>
+        <class>at.fhburgenland.database.entities.Vehicle</class>
         <properties>
             <!-- Driver for DB database -->
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <!-- URL for DB -->
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Gruppe1"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.11.12.13:5432/Gruppe1"/>
             <!-- Username -->
-            <property name="javax.persistence.jdbc.user" value="gino"/>
+            <property name="javax.persistence.jdbc.user" value="bswe"/>
             <!-- Password -->
-            <property name="javax.persistence.jdbc.password" value="fh-burgenland"/>
+            <property name="javax.persistence.jdbc.password" value="fogl"/>
         </properties>
     </persistence-unit>
 
